@@ -1,5 +1,7 @@
 package com.dahee8kim.monitoring.controller;
 
+import com.dahee8kim.monitoring.domain.osm.Token;
+import com.dahee8kim.monitoring.restAPI.osm.TokenController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping("/")
     public String home() {
+        TokenController tokenController = new TokenController();
+
+        // 토큰 정보
+        Token token = tokenController.getToken();
         return "index";
     }
 }
