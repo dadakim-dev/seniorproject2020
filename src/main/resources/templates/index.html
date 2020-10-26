@@ -45,10 +45,11 @@
                             <div class="progress" style="height: 15px;">
                                 <div class="progress-bar"
                                      role="progressbar"
-                                     style="width: calc(5 / 8 * 100%);"
-                                     aria-valuenow="5"
+                                     th:style="'width: calc(' + ${resource.getUsedVCPU()} + '/' + ${resource.getTotalVCPU()} + '* 100%)'"
+                                     th:aria-valuenow="${resource.getUsedVCPU()}"
+                                     th:aria-valuemax="${resource.getTotalVCPU()}"
                                      aria-valuemin="0"
-                                     aria-valuemax="8">5 Cores</div>
+                                     th:text="${resource.getUsedVCPU()} + ' cores'"></div>
                             </div>
                         </div>
                     </div>
@@ -65,10 +66,11 @@
                             <div class="progress" style="height: 15px;">
                                 <div class="progress-bar"
                                      role="progressbar"
-                                     style="width: calc(30 / 80 * 100%);"
-                                     aria-valuenow="30"
+                                     th:style="'width: calc(' + ${resource.getUsedDisk()} + '/' + ${resource.getTotalDisk()} + '* 100%)'"
+                                     th:aria-valuenow="${resource.getUsedDisk()}"
+                                     th:aria-valuemax="${resource.getTotalDisk()}"
                                      aria-valuemin="0"
-                                     aria-valuemax="80">30 GB</div>
+                                     th:text="${resource.getUsedDisk()} + ' GB'"></div>
                             </div>
                         </div>
                     </div>
@@ -85,10 +87,11 @@
                             <div class="progress" style="height: 15px;">
                                 <div class="progress-bar"
                                      role="progressbar"
-                                     style="width: calc(13 / 16 * 100%);"
-                                     aria-valuenow="13"
+                                     th:style="'width: calc(' + ${resource.getUsedMemory()} + '/' + ${resource.getTotalMemory()} + '* 100%)'"
+                                     th:aria-valuenow="${resource.getUsedMemory()}"
+                                     th:aria-valuemax="${resource.getTotalMemory()}"
                                      aria-valuemin="0"
-                                     aria-valuemax="16">13 GB</div>
+                                     th:text="${resource.getUsedMemory()} + ' GB'"></div>
                             </div>
                         </div>
                     </div>
@@ -99,7 +102,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">Network Service</h3>
+                        <h3 class="card-title">OSM Network Service</h3>
                         <div class="card-text">
                             <table class="table">
                                 <thead>
@@ -111,26 +114,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="n: ${ns}">
                                     <td>
-                                        <a href="/ns/detail?id=153215388525">153215388525</a>
+                                        <a th:href="@{/ns/detail(id=${n.getId()})}" th:text="${n.getId()}"></a>
                                     </td>
                                     <td>
-                                        <a href="/ns/detail?id=153215388525">cirros_2vnf_ns</a>
+                                        <a th:href="@{/ns/detail(id=${n.getId()})}" th:text="${n.getName()}"></a>
                                     </td>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                    <td th:text="${n.getDescription()}"></td>
                                     <td>
-                                        <div class="btn btn-sm btn-success">Configured</div>
-                                        <div class="btn btn-sm btn-success">Running</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>153215388525</td>
-                                    <td>cirros_2vnf_ns</td>
-                                    <td>Amet at atque commodi corporis cumque distinctio ea eos,</td>
-                                    <td>
-                                        <div class="btn btn-sm btn-success">Configured</div>
-                                        <div class="btn btn-sm btn-danger">Failed</div>
+                                        <div class="btn btn-sm configStatus" th:text="${n.getConfigStatus()}"></div>
+                                        <div class="btn btn-sm nsStatus" th:text="${n.getNsState()}"></div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -144,7 +138,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">VM Instance</h3>
+                        <h3 class="card-title">OpenStack VM Instance</h3>
                         <div class="card-text">
                             <table class="table">
                                 <thead>
@@ -152,7 +146,7 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Running Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -182,11 +176,76 @@
                 </div>
             </div>
         </div>
+        <div class="row kube">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Kubernetes Container</h3>
+                        <div class="card-text">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">CPU Utilization(cores)</th>
+                                    <th scope="col">Memory Utilization</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="/ns/detail?id=153215388525">153215388525</a>
+                                    </td>
+                                    <td>
+                                        <a href="/ns/detail?id=153215388525">cirros_2vnf_ns</a>
+                                    </td>
+                                    <td>
+                                        <div class="btn btn-sm btn-success">Running</div>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>153215388525</td>
+                                    <td>cirros_2vnf_ns</td>
+                                    <td>
+                                        <div class="btn btn-sm btn-success">Running</div>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 
 <script>
 $(function() {
+    $(".row.ns table tbody tr").each(function(e, el) {
+        var configStatus = $(el).find(".configStatus");
+        var nsStatus = $(el).find(".nsStatus");
+
+        if($(configStatus).text().trim() == "configured") {
+            $(configStatus).addClass("btn-success");
+            $(configStatus).text("Configured");
+        }
+
+        if($(nsStatus).text().trim() == "READY")
+            $(nsStatus).addClass("btn-success");
+        else if($(nsStatus).text().trim() == "BROKEN")
+            $(nsStatus).addClass("btn-danger");
+    });
+
     var ctx = document.getElementById("canvas").getContext("2d");
     var myLineChart = new Chart(ctx, {
         type: 'line',
