@@ -1,5 +1,6 @@
 package com.dahee8kim.monitoring.controller;
 
+import com.dahee8kim.monitoring.domain.openstack.Instance;
 import com.dahee8kim.monitoring.domain.osm.NS;
 import com.dahee8kim.monitoring.domain.osm.Token;
 import com.dahee8kim.monitoring.restAPI.openstack.OpenStackTokenController;
@@ -17,31 +18,30 @@ import java.util.ArrayList;
 public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
-        OSMTokenController OSMTokenController = new OSMTokenController();
-        NSController nsController = new NSController();
+        // OSM Token
+//        OSMTokenController OSMTokenController = new OSMTokenController();
+//        Token token = OSMTokenController.getToken();
 
-//         토큰 정보
-        Token token = OSMTokenController.getToken();
+        // NS List
+//        NSController nsController = new NSController();
+//        ArrayList<NS> ns = nsController.getNS(token.getToken());
 
-//         NS 리스트
-        ArrayList<NS> ns = nsController.getNS(token.getToken());
-        model.addAttribute("ns", ns);
+//        model.addAttribute("ns", ns);
 
         // OpenStack Token
         OpenStackTokenController openStackTokenController = new OpenStackTokenController();
         String openStackToken = openStackTokenController.getToken();
 
+        // Resource Info
         ResourceController resourceController = new ResourceController();
         resourceController.setToken(openStackToken);
         model.addAttribute("resource", resourceController.getResource());
 
-        // OpenStack Usage Info
-//        System.out.println(vmInstanceController.getUsages(openStackToken));
-
-        // OpenStack Total Resource
-//        System.out.println(vmInstanceController.getInventories(openStackToken));
-
         // OpenStack VM Instance | OSM VM Instance
+        VMInstanceController vmInstanceController = new VMInstanceController();
+        vmInstanceController.setToken(openStackToken);
+        ArrayList<Instance> instance = vmInstanceController.getInstance();
+        model.addAttribute("instance", instance);
 
         return "index";
     }

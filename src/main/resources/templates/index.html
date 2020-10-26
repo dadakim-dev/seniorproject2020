@@ -150,23 +150,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="i: ${instance}">
                                     <td>
-                                        <a href="/ns/detail?id=153215388525">153215388525</a>
+                                        <a th:href="@{/vm/detail(id=${i.getId()})}" th:text="${i.getId()}"></a>
                                     </td>
                                     <td>
-                                        <a href="/ns/detail?id=153215388525">cirros_2vnf_ns</a>
+                                        <a th:href="@{/vm/detail(id=${i.getId()})}" th:text="${i.getName()}"></a>
                                     </td>
                                     <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
                                     <td>
                                         <canvas id="canvas" height="30"></canvas>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>153215388525</td>
-                                    <td>cirros_2vnf_ns</td>
-                                    <td>Amet at atque commodi corporis cumque distinctio ea eos,</td>
-                                    <td>
                                     </td>
                                 </tr>
                                 </tbody>
