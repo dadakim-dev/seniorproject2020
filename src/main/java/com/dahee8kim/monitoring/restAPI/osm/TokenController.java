@@ -34,7 +34,7 @@ public class TokenController {
             JSONObject jsonData = (JSONObject) parser.parse(data);
 
             token.setProjectId(jsonData.get("project_id").toString());
-            token.setToken(jsonData.get("id").toString());
+            token.setToken(jsonData.get("_id").toString());
             token.setUserId(jsonData.get("user_id").toString());
             token.setUserName(jsonData.get("username").toString());
         } catch (Exception e) {
