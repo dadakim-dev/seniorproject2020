@@ -1,5 +1,6 @@
 package com.dahee8kim.monitoring.restAPI.osm;
 
+import com.dahee8kim.monitoring.domain.osm.NS;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -8,11 +9,12 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 @RestController
 public class NSController {
-    public String getNS(String token) {
+    public ArrayList<NS> getNS(String token) {
         /*
         * curl --location
         * --request GET 'http://3.35.234.229:8888/osm/nslcm/v1/ns_instances'
@@ -20,6 +22,8 @@ public class NSController {
         * --header 'Accept: application/json'
         * --header 'Authorization: Bearer  gAAAAABfli-S7mIA2YIIO_UrZyuWIvVObfD_4Y09HxQ4Hw28H0bey09o4L8N1rw3MPPI5_yklWOhA_AHT8x7hTgggCqAWP9035J1wxdLf_ivvQboo3HjM5-ZBbw5G_sR4Q5hBtKfGyOtjCnl_Y4JgEoNhz5UoBAi6bPjpFV_w4WNlhwuRS0BfAJSAAIecwfLP8KXtJb8CUh-'
         * */
+
+        ArrayList<NS> nsArray = new ArrayList<NS>();
 
         try {
             String url = "http://3.35.234.229:8888/osm/nslcm/v1/ns_instances";
@@ -35,21 +39,25 @@ public class NSController {
 
             JSONParser parser = new JSONParser();
             JSONArray ns = (JSONArray) parser.parse(response.getBody());
-            JSONObject ns1 = (JSONObject) ns.get(0);
 
-            String id = ns1.get("_id").toString();
-            String name = ns1.get("name").toString();
-            String operationalStatus = ns1.get("operational-status").toString();
-            String configStatus = ns1.get("config-status").toString();
-            String detailedStatus = ns1.get("detailed-status").toString();
+            for (int i = 0; i < ns.size(); i++) {
+                NS ns_ = new NS();
+                JSONObject n = (JSONObject) parser.parse(ns.get(i).toString());
+                ns_.setId(n.get("_id").toString());
+                ns_.setName(n.get("name").toString());
+                ns_.setDescription(n.get("description").toString());
+                ns_.setNsState(n.get("nsState").toString());
+                ns_.setOperationalStatus(n.get("operational-status").toString());
+                ns_.setConfigStatus(n.get("config-status").toString());
+                ns_.setDetailedStatus(n.get("detailed-status").toString());
+//                ns_.setErrorDetail(n.get("errorDetail").toString());
 
-            return detailedStatus;
-//            return response.getBody();
-
-//            String data = response.getBody();
+                nsArray.add(ns_);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+
+        return nsArray;
     }
 }
