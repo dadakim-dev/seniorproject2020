@@ -8,6 +8,7 @@ import com.dahee8kim.monitoring.restAPI.openstack.ResourceController;
 import com.dahee8kim.monitoring.restAPI.openstack.VMInstanceController;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
+import com.dahee8kim.monitoring.restAPI.prometheus.VMStatusController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +20,15 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         // OSM Token
-//        OSMTokenController OSMTokenController = new OSMTokenController();
-//        Token token = OSMTokenController.getToken();
+        OSMTokenController OSMTokenController = new OSMTokenController();
+        Token token = OSMTokenController.getToken();
 
         // NS List
-//        NSController nsController = new NSController();
-//        ArrayList<NS> ns = nsController.getNS(token.getToken());
+        NSController nsController = new NSController();
+        nsController.setToken(token.getToken());
+        ArrayList<NS> ns = nsController.getNS();
 
-//        model.addAttribute("ns", ns);
+        model.addAttribute("ns", ns);
 
         // OpenStack Token
         OpenStackTokenController openStackTokenController = new OpenStackTokenController();

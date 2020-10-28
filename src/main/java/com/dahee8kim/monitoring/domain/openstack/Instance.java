@@ -1,5 +1,7 @@
 package com.dahee8kim.monitoring.domain.openstack;
 
+import java.util.ArrayList;
+
 public class Instance {
     public String getId() {
         return id;
@@ -25,7 +27,17 @@ public class Instance {
         this.status = status;
     }
 
+    public ArrayList<String> getVmStatusData() {
+        return vmStatusData;
+    }
+
+    public void setVmStatusData(ArrayList<String> vmStatusData) {
+        this.vmStatusData = vmStatusData;
+    }
+
     private String id;
     private String name;
     private String status;
+
+    private ArrayList<String> vmStatusData = new ArrayList<>();
 }

@@ -13,8 +13,8 @@ import java.util.Collections;
 @RestController
 public class ResourceController {
     private String token;
-    private String url = "http://3.35.234.229:8778/resource_providers";
-    private String projectID = "e016b0f2-e332-432c-97f6-41624773b944";
+    private String url = "http://54.180.149.38:8778/resource_providers";
+    private String projectID = "97852b05-1c06-41b7-bcb5-8c4bb5c41f26";
 
     private Resource resource = new Resource();
 

@@ -14,7 +14,13 @@ import java.util.Collections;
 
 @RestController
 public class NSController {
-    public ArrayList<NS> getNS(String token) {
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    private String token;
+
+    public ArrayList<NS> getNS() {
         /*
         * curl --location
         * --request GET 'http://3.35.234.229:8888/osm/nslcm/v1/ns_instances'
@@ -26,7 +32,7 @@ public class NSController {
         ArrayList<NS> nsArray = new ArrayList<NS>();
 
         try {
-            String url = "http://3.35.234.229:8888/osm/nslcm/v1/ns_instances";
+            String url = "http://54.180.149.38:8888/osm/nslcm/v1/ns_instances";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -59,5 +65,44 @@ public class NSController {
         }
 
         return nsArray;
+    }
+
+    public String getNSDetail(String id) {
+        try {
+            String url = "http://54.180.149.38:8888/osm/nslcm/v1/ns_instances/" + id;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            headers.setBearerAuth(token);
+
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+            System.out.println(response.getBody().toString());
+
+            JSONParser parser = new JSONParser();
+//            JSONArray ns = (JSONArray) parser.parse(response.getBody());
+
+//            for (int i = 0; i < ns.size(); i++) {
+//                NS ns_ = new NS();
+//                JSONObject n = (JSONObject) parser.parse(ns.get(i).toString());
+//                ns_.setId(n.get("_id").toString());
+//                ns_.setName(n.get("name").toString());
+//                ns_.setDescription(n.get("description").toString());
+//                ns_.setNsState(n.get("nsState").toString());
+//                ns_.setOperationalStatus(n.get("operational-status").toString());
+//                ns_.setConfigStatus(n.get("config-status").toString());
+//                ns_.setDetailedStatus(n.get("detailed-status").toString());
+////                ns_.setErrorDetail(n.get("errorDetail").toString());
+//
+//                nsArray.add(ns_);
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }
