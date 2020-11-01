@@ -32,7 +32,7 @@ public class NSController {
         ArrayList<NS> nsArray = new ArrayList<NS>();
 
         try {
-            String url = "http://54.180.149.38:8888/osm/nslcm/v1/ns_instances";
+            String url = "http://15.164.103.73:8888/osm/nslcm/v1/ns_instances";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

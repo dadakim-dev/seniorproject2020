@@ -17,7 +17,7 @@ import java.util.Collections;
 @RestController
 public class VMInstanceController {
     private String token;
-    private String url = "http://54.180.149.38:8774/v2.1/servers";
+    private String url = "http://15.164.103.73:8774/v2.1/servers";
     private ArrayList<Instance> instance = new ArrayList<>();
     private VMStatusController vmStatusController = new VMStatusController();
 
