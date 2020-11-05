@@ -69,7 +69,7 @@ public class NSController {
 
     public String getNSDetail(String id) {
         try {
-            String url = "http://54.180.149.38:8888/osm/nslcm/v1/ns_instances/" + id;
+            String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances/" + id;
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

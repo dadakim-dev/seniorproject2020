@@ -45,6 +45,9 @@ public class HomeController {
         ArrayList<Instance> instance = vmInstanceController.getInstance();
         model.addAttribute("instance", instance);
 
+
+
+
         return "index";
     }
 }
