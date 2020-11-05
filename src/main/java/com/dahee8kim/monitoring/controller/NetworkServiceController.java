@@ -1,5 +1,6 @@
 package com.dahee8kim.monitoring.controller;
 
+import com.dahee8kim.monitoring.domain.osm.NS;
 import com.dahee8kim.monitoring.domain.osm.Token;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
@@ -8,10 +9,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+
 @Controller
 public class NetworkServiceController {
     @GetMapping("/ns")
-    public String NetworkService() {
+    public String NetworkService(Model model) {
+        OSMTokenController osmTokenController = new OSMTokenController();
+        String osmToken = osmTokenController.getToken();
+
+        NSController nsController = new NSController();
+        nsController.setToken(osmToken);
+
+        ArrayList<NS> nsList = nsController.getNS();
+
+        model.addAttribute("ns", nsList);
+
         return "ns/index";
     }
 

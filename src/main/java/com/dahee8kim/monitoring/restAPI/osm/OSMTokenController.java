@@ -14,8 +14,7 @@ import java.util.Collections;
 
 @RestController
 public class OSMTokenController {
-    public Token getToken() {
-        Token token = new Token();
+    public String getToken() {
         try {
             String url = "http://3.35.26.6:8888/osm/admin/v1/tokens";
 
@@ -33,14 +32,11 @@ public class OSMTokenController {
             String data = response.getBody();
             JSONObject jsonData = (JSONObject) parser.parse(data);
 
-            token.setProjectId(jsonData.get("project_id").toString());
-            token.setToken(jsonData.get("_id").toString());
-            token.setUserId(jsonData.get("user_id").toString());
-            token.setUserName(jsonData.get("username").toString());
+            return jsonData.get("_id").toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return token;
+        return "";
     }
 }
