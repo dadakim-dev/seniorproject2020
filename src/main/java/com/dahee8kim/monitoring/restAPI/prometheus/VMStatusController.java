@@ -41,7 +41,7 @@ public class VMStatusController {
     }
 
     public String getVMStatus(String id, String time) {
-        String url = "http://15.164.103.73:9090/api/v1/query?query=osm_vm_status%7Binstance%3D%27mon-k8s%3A8000%27%2Cjob%3D%27prometheus%27%2Cresource_uuid%3D%27"+id+"%27%7D&time=" + time;
+        String url = "http://3.35.26.6:9090/api/v1/query?query=osm_vm_status%7Binstance%3D%27mon-k8s%3A8000%27%2Cjob%3D%27prometheus%27%2Cresource_uuid%3D%27"+id+"%27%7D&time=" + time;
         URI uri = null;
         try {
             uri = new URI(url);
