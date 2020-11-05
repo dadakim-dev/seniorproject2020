@@ -17,14 +17,14 @@ public class OSMTokenController {
     public Token getToken() {
         Token token = new Token();
         try {
-            String url = "http://15.164.103.73:8888/osm/admin/v1/tokens";
+            String url = "http://3.35.26.6:8888/osm/admin/v1/tokens";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
             JSONParser parser = new JSONParser();
-            JSONObject rawData = (JSONObject) parser.parse("{\"username\": \"admin\", \"password\": \"admin\", \"project_id\" : \"12a44b487b5b477cbe70e9b1681ff767\"}");
+            JSONObject rawData = (JSONObject) parser.parse("{\"username\": \"admin\", \"password\": \"admin\", \"project_id\" : \"4a723640f9fe46e983cd4f46bcc25448\"}");
 
             HttpEntity<String> request = new HttpEntity<>(rawData.toString(), headers);
             RestTemplate restTemplate = new RestTemplate();
