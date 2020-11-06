@@ -1,8 +1,12 @@
 package com.dahee8kim.monitoring.controller;
 
 import com.dahee8kim.monitoring.domain.openstack.Instance;
+import com.dahee8kim.monitoring.domain.openstack.NetworkInterface;
+import com.dahee8kim.monitoring.domain.openstack.NetworkList;
+import com.dahee8kim.monitoring.domain.openstack.Routers;
 import com.dahee8kim.monitoring.domain.osm.NS;
 import com.dahee8kim.monitoring.domain.osm.Token;
+import com.dahee8kim.monitoring.restAPI.openstack.NetworkTopologyController;
 import com.dahee8kim.monitoring.restAPI.openstack.OpenStackTokenController;
 import com.dahee8kim.monitoring.restAPI.openstack.ResourceController;
 import com.dahee8kim.monitoring.restAPI.openstack.VMInstanceController;
@@ -45,7 +49,15 @@ public class HomeController {
         ArrayList<Instance> instance = vmInstanceController.getInstance();
         model.addAttribute("instance", instance);
 
-
+        // OpenStack Network Topology
+        NetworkTopologyController networkTopologyController = new NetworkTopologyController();
+        networkTopologyController.setToken(openStackToken);
+        ArrayList<NetworkList> networkLists = networkTopologyController.getNetworkList();
+        ArrayList<Routers> routerlists = networkTopologyController.getRouterslist();
+        ArrayList<NetworkInterface> interfacelists = networkTopologyController.getInterfacelist();
+        model.addAttribute("networkLists",networkLists);
+        model.addAttribute("routerlists",routerlists);
+        model.addAttribute("interfacelists",interfacelists);
 
 
         return "index";
