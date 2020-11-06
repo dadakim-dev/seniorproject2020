@@ -9,5 +9,41 @@
 </head>
 <body>
 
+
+<div>router 추가</div>
+<form action="/router" method="get">
+    <input type="text" id="router-name" name="router-name" required
+           minlength="1" maxlength="15" size="10" placeholder="router-name">
+    <input type="submit" value="register">
+</form>
+
+
+<div>interface 추가</div>
+<form action="/interface" method="get">
+    <input type="text" id="router-id" name="router-id" required
+           minlength="1" size="50" placeholder="router-id">
+    <input type="text" id="subnet-id" name="subnet-id" required
+           minlength="1" size="50" placeholder="subnet-id">
+    <input type="submit" value="add interface">
+</form>
+
+<div>subnet 추가</div>
+<form action="/subnet" method="get">
+    <input type="text" id="subnet-name" name="subnet-name" required
+           minlength="1" size="50" placeholder="subnet-name">
+    <input type="text" id="network-id" name="network-id" required
+           minlength="1" size="50" placeholder="network-id">
+    <select name="ip-version" id="ip-version">
+        <option value="4">ipv4</option>
+        <option value="6">ipv6</option>
+    </select>
+    <input type="text" id="cidr" name="cidr" required
+           minlength="1" size="50" placeholder="cidr">
+    <input type="text" id="start-pool" name="start-pool" required
+           minlength="1" size="50" placeholder="start-pool">
+    <input type="text" id="end-pool" name="end-pool" required
+           minlength="1" size="50" placeholder="end-pool">
+    <input type="submit" value="create subnets">
+</form>
 </body>
 </html>

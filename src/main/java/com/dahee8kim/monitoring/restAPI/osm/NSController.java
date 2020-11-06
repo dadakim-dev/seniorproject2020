@@ -37,7 +37,6 @@ public class NSController {
             JSONArray nets = (JSONArray) parser.parse(deploy.get("nets").toString());
             JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
             ns.setVim_net_id(net.get("vim_net_id").toString());
-            System.out.println(ns.getVim_net_id());
 
         } catch (ParseException e) {
             e.printStackTrace();
