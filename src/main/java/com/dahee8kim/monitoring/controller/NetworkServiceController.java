@@ -2,8 +2,10 @@ package com.dahee8kim.monitoring.controller;
 
 import com.dahee8kim.monitoring.domain.osm.NS;
 import com.dahee8kim.monitoring.domain.osm.Token;
+import com.dahee8kim.monitoring.domain.osm.VNF;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
+import com.dahee8kim.monitoring.restAPI.osm.VNFController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,10 @@ public class NetworkServiceController {
         NSController nsController = new NSController();
         nsController.setToken(osmToken);
 
-        ArrayList<NS> nsList = nsController.getNS();
+        ArrayList<NS> nsList = nsController.getNS(true);
+
+//        VNFController vnfController = new VNFController();
+//        vnfController.setToken(osmToken);
 
         model.addAttribute("ns", nsList);
 

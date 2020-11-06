@@ -1,5 +1,7 @@
 package com.dahee8kim.monitoring.domain.osm;
 
+import java.util.ArrayList;
+
 public class NS {
     private String id;
     private String name;
@@ -9,6 +11,7 @@ public class NS {
     private String configStatus;
     private String detailedStatus;
     private String errorDetail;
+    private ArrayList<VNF> VNFs;
 
     public String getId() {
         return id;
@@ -72,5 +75,13 @@ public class NS {
 
     public void setErrorDetail(String errorDetail) {
         this.errorDetail = errorDetail;
+    }
+
+    public ArrayList<VNF> getVNFs() {
+        return VNFs;
+    }
+
+    public void setVNFs(ArrayList<VNF> VNFs) {
+        this.VNFs = VNFs;
     }
 }

@@ -1,6 +1,7 @@
 package com.dahee8kim.monitoring.restAPI.osm;
 
 import com.dahee8kim.monitoring.domain.osm.NS;
+import com.dahee8kim.monitoring.domain.osm.VNF;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,15 +21,7 @@ public class NSController {
 
     private String token;
 
-    public ArrayList<NS> getNS() {
-        /*
-        * curl --location
-        * --request GET 'http://3.35.234.229:8888/osm/nslcm/v1/ns_instances'
-        * --header 'Content-Type: application/json'
-        * --header 'Accept: application/json'
-        * --header 'Authorization: Bearer  gAAAAABfli-S7mIA2YIIO_UrZyuWIvVObfD_4Y09HxQ4Hw28H0bey09o4L8N1rw3MPPI5_yklWOhA_AHT8x7hTgggCqAWP9035J1wxdLf_ivvQboo3HjM5-ZBbw5G_sR4Q5hBtKfGyOtjCnl_Y4JgEoNhz5UoBAi6bPjpFV_w4WNlhwuRS0BfAJSAAIecwfLP8KXtJb8CUh-'
-        * */
-
+    public ArrayList<NS> getNS(boolean hasVnf) {
         ArrayList<NS> nsArray = new ArrayList<NS>();
 
         try {
@@ -56,7 +49,21 @@ public class NSController {
                 ns_.setOperationalStatus(n.get("operational-status").toString());
                 ns_.setConfigStatus(n.get("config-status").toString());
                 ns_.setDetailedStatus(n.get("detailed-status").toString());
-//                ns_.setErrorDetail(n.get("errorDetail").toString());
+
+                if(hasVnf) { // require vnf
+                    VNFController vnfController = new VNFController();
+                    vnfController.setToken(token);
+
+                    ArrayList<VNF> VNFs = new ArrayList<>();
+
+                    JSONObject deployments = (JSONObject) parser.parse(n.get("deploymentStatus").toString());
+                    JSONArray vnfs = (JSONArray) parser.parse(deployments.get("vnfs").toString());
+
+                    for(int j = 0; j < vnfs.size(); j++) {
+                        VNFs.add(vnfController.vnfParser(vnfs.get(j).toString()));
+                    }
+                    ns_.setVNFs(VNFs);
+                }
 
                 nsArray.add(ns_);
             }
@@ -79,8 +86,6 @@ public class NSController {
             HttpEntity<String> request = new HttpEntity<>(headers);
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-
-            System.out.println(response.getBody().toString());
 
             JSONParser parser = new JSONParser();
 //            JSONArray ns = (JSONArray) parser.parse(response.getBody());

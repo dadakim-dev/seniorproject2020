@@ -26,7 +26,7 @@ public class HomeController {
         // NS List
         NSController nsController = new NSController();
         nsController.setToken(osmToken);
-        ArrayList<NS> ns = nsController.getNS();
+        ArrayList<NS> ns = nsController.getNS(false);
 
         model.addAttribute("ns", ns);
 
