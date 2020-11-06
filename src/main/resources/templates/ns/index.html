@@ -168,36 +168,36 @@
                                             <div class="btn btn-sm btn-danger" th:text="${n.nsState}"></div>
                                         </td>
                                     </tr>
-<!--                                    <tr>-->
-<!--                                        <td th:each="n, obj: ${ns}" colspan="4" style="padding: 0;">-->
-<!--                                            <div class="collapse" th:id="'accordian' + ${obj.index}">-->
-<!--                                                <table class="table table-light" style="margin: 0;">-->
-<!--                                                    <thead>-->
-<!--                                                        <tr>-->
-<!--                                                            <th scope="col" width="25%" style="padding: 0;"></th>-->
-<!--                                                            <th scope="col" width="10%" style="padding: 0;"></th>-->
-<!--                                                            <th scope="col" width="10%" style="padding: 0;"></th>-->
-<!--                                                            <th scope="col" width="10%" style="padding: 0;"></th>-->
-<!--                                                            <th scope="col" width="10%" style="padding: 0;"></th>-->
-<!--                                                            <th scope="col" width="35%" style="padding: 0;"></th>-->
-<!--                                                        </tr>-->
-<!--                                                    </thead>-->
-<!--                                                    <tbody>-->
-<!--                                                        <tr th:each="v, obj2: ${n.VNFs}">-->
-<!--                                                            <td th:text="${v.id}"></td>-->
-<!--                                                            <td th:text="${v.name}"></td>-->
-<!--                                                            <td><strong>VCPU</strong>: 1 Core</td>-->
-<!--                                                            <td><strong>Disk</strong>: 20 GB</td>-->
-<!--                                                            <td><strong>Memory</strong>: 2 GB</td>-->
-<!--                                                            <td>-->
-<!--                                                                <canvas class="vmRunningChart" id="vmRunningChart_0" height="30"></canvas>-->
-<!--                                                            </td>-->
-<!--                                                        </tr>-->
-<!--                                                    </tbody>-->
-<!--                                                </table>-->
-<!--                                            </div>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
+                                    <tr th:each="n, obj: ${ns}">
+                                        <td colspan="4" style="padding: 0;">
+                                            <div class="collapse" th:id="'accordian' + ${obj.index}">
+                                                <table class="table table-light" style="margin: 0;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" width="25%" style="padding: 0;"></th>
+                                                            <th scope="col" width="10%" style="padding: 0;"></th>
+                                                            <th scope="col" width="10%" style="padding: 0;"></th>
+                                                            <th scope="col" width="10%" style="padding: 0;"></th>
+                                                            <th scope="col" width="10%" style="padding: 0;"></th>
+                                                            <th scope="col" width="35%" style="padding: 0;"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr th:each="v, obj2: ${n.VNFs}">
+                                                            <td th:text="${v.id}"></td>
+                                                            <td th:text="${v.name}"></td>
+                                                            <td><strong>VCPU</strong>: 1 Core</td>
+                                                            <td><strong>Disk</strong>: 20 GB</td>
+                                                            <td><strong>Memory</strong>: 2 GB</td>
+                                                            <td>
+                                                                <canvas class="vmRunningChart" id="vmRunningChart_0" height="30"></canvas>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

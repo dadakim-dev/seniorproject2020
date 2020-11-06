@@ -50,21 +50,6 @@ public class NSController {
                 ns_.setConfigStatus(n.get("config-status").toString());
                 ns_.setDetailedStatus(n.get("detailed-status").toString());
 
-                if(hasVnf) { // require vnf
-                    VNFController vnfController = new VNFController();
-                    vnfController.setToken(token);
-
-                    ArrayList<VNF> VNFs = new ArrayList<>();
-
-                    JSONObject deployments = (JSONObject) parser.parse(n.get("deploymentStatus").toString());
-                    JSONArray vnfs = (JSONArray) parser.parse(deployments.get("vnfs").toString());
-
-                    for(int j = 0; j < vnfs.size(); j++) {
-                        VNFs.add(vnfController.vnfParser(vnfs.get(j).toString()));
-                    }
-                    ns_.setVNFs(VNFs);
-                }
-
                 nsArray.add(ns_);
             }
         } catch (Exception e) {

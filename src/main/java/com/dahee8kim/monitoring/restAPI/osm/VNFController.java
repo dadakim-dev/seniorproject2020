@@ -61,6 +61,7 @@ public class VNFController {
         JSONParser jsonParser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(text);
+            System.out.println(jsonObject.toString());
             vnf.setId(jsonObject.get("vnf_id").toString());
             vnf.setName(jsonObject.get("vnf_name").toString());
         } catch (ParseException e) {
