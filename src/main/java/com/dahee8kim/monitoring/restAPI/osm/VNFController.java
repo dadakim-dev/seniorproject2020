@@ -2,6 +2,7 @@ package com.dahee8kim.monitoring.restAPI.osm;
 
 import com.dahee8kim.monitoring.domain.osm.VNF;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.*;
@@ -23,6 +24,21 @@ public class VNFController {
 
     public VNF parseVNF(String text) {
         VNF vnf = new VNF();
+
+        JSONParser jsonParser = new JSONParser();
+        try {
+            // set VNF ID
+            JSONObject jsonData = (JSONObject) jsonParser.parse(text);
+            vnf.setId(jsonData.get("id").toString());
+
+            // set VIM ID (OpenStack VNF ID)
+            JSONArray vdurs = (JSONArray) jsonParser.parse(jsonData.get("vdur").toString());
+            JSONObject vdur = (JSONObject) jsonParser.parse(vdurs.get(0).toString());
+            vnf.setVimId(vdur.get("vim-id").toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return vnf;
     }
 
@@ -43,8 +59,10 @@ public class VNFController {
         JSONParser parser = new JSONParser();
 
         try {
-            JSONArray ns = (JSONArray) parser.parse(response.getBody());
-            System.out.println(response.getBody());
+            JSONArray vnf = (JSONArray) parser.parse(response.getBody());
+            vnf.forEach(v -> {
+                VNFs.add(parseVNF(v.toString()));
+            });
         } catch (ParseException e) {
             e.printStackTrace();
         }

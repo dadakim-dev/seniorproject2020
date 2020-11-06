@@ -9,5 +9,14 @@ public class VNF {
         this.id = id;
     }
 
+    public String getVimId() {
+        return vimId;
+    }
+
+    public void setVimId(String vimId) {
+        this.vimId = vimId;
+    }
+
     private String id;
+    private String vimId;
 }
