@@ -12,6 +12,7 @@ import com.dahee8kim.monitoring.restAPI.openstack.ResourceController;
 import com.dahee8kim.monitoring.restAPI.openstack.VMInstanceController;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
+import com.dahee8kim.monitoring.restAPI.osm.VNFController;
 import com.dahee8kim.monitoring.restAPI.prometheus.VMStatusController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,11 @@ public class HomeController {
     public String home(Model model) {
         // OSM Token
         OSMTokenController OSMTokenController = new OSMTokenController();
-        Token token = OSMTokenController.getToken();
+        String osmToken = OSMTokenController.getToken();
 
         // NS List
         NSController nsController = new NSController();
-        nsController.setToken(token.getToken());
+        nsController.setToken(osmToken);
         ArrayList<NS> ns = nsController.getNS();
 
         model.addAttribute("ns", ns);
