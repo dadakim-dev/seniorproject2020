@@ -38,17 +38,6 @@ public class HomeController {
         OpenStackTokenController openStackTokenController = new OpenStackTokenController();
         String openStackToken = openStackTokenController.getToken();
 
-        // Resource Info
-        ResourceController resourceController = new ResourceController();
-        resourceController.setToken(openStackToken);
-        model.addAttribute("resource", resourceController.getResource());
-
-        // OpenStack VM Instance | OSM VM Instance
-        VMInstanceController vmInstanceController = new VMInstanceController();
-        vmInstanceController.setToken(openStackToken);
-        ArrayList<Instance> instance = vmInstanceController.getInstance();
-        model.addAttribute("instance", instance);
-
 
         return "index";
     }
