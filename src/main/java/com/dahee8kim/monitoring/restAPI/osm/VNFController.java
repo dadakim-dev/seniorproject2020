@@ -21,47 +21,51 @@ public class VNFController {
 
     private String token;
 
-//    public ArrayList<VNF> getVNFList() {
-//        ArrayList<VNF> vnfList = new ArrayList<>();
-//        String url = "http://3.35.26.6:8888/osm/nslcm/v1/vnf_instances";
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-//        headers.setBearerAuth(token);
-//
-//        HttpEntity<String> request = new HttpEntity<>(headers);
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-//
-//        System.out.println(response.getBody().toString());
-//
-//        JSONParser jsonParser = new JSONParser();
-//        try {
-//            JSONArray vnfArray = (JSONArray) jsonParser.parse(response.getBody().toString());
-//            for(int i = 0; i < vnfArray.size(); i++) {
-//                JSONObject vnfObject = (JSONObject) jsonParser.parse(vnfArray.get(i).toString());
-//
-//                VNF vnf = new VNF();
-//
-//                vnf.setId(vnfObject.get("id").toString());
-//                vnf.setName(vnfObject.get("name").toString());
-//                vnf.setVimId(vnfObject.get("vim-id").toString());
-//            }
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return vnfList;
-//    }
+    public VNFController(String osmToken) {
+        this.token = osmToken;
+    }
+
+    public ArrayList<VNF> getVNFList() {
+        ArrayList<VNF> vnfList = new ArrayList<>();
+        String url = "http://3.35.26.6:8888/osm/nslcm/v1/vnf_instances";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        System.out.println(response.getBody().toString());
+
+        JSONParser jsonParser = new JSONParser();
+        try {
+            JSONArray vnfArray = (JSONArray) jsonParser.parse(response.getBody().toString());
+            for(int i = 0; i < vnfArray.size(); i++) {
+                JSONObject vnfObject = (JSONObject) jsonParser.parse(vnfArray.get(i).toString());
+
+                VNF vnf = new VNF();
+
+                vnf.setId(vnfObject.get("id").toString());
+                vnf.setName(vnfObject.get("name").toString());
+                vnf.setVimId(vnfObject.get("vim-id").toString());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return vnfList;
+    }
 
     public VNF vnfParser(String text) {
-        FlavorController flavorController = new FlavorController(token);
+//        FlavorController flavorController = new FlavorController(token);
         VNF vnf = new VNF();
 
         JSONParser jsonParser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(text);
-            System.out.println(jsonObject.toString());
+//            System.out.println(jsonObject.toString());
             vnf.setId(jsonObject.get("vnf_id").toString());
             vnf.setName(jsonObject.get("vnf_name").toString());
         } catch (ParseException e) {

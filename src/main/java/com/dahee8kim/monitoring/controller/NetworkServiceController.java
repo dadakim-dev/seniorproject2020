@@ -20,15 +20,16 @@ public class NetworkServiceController {
         OSMTokenController osmTokenController = new OSMTokenController();
         String osmToken = osmTokenController.getToken();
 
-        NSController nsController = new NSController();
-        nsController.setToken(osmToken);
+//        NSController nsController = new NSController();
+//        nsController.setToken(osmToken);
 
-        ArrayList<NS> nsList = nsController.getNS(true);
+        VNFController vnfController = new VNFController(osmToken);
+        ArrayList<VNF> vnfList = vnfController.getVNFList();
 
-//        VNFController vnfController = new VNFController();
-//        vnfController.setToken(osmToken);
+//        ArrayList<NS> nsList = nsController.getNS(true);
 
-        model.addAttribute("ns", nsList);
+
+//        model.addAttribute("ns", nsList);
 
         return "ns/index";
     }
