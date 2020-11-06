@@ -28,6 +28,10 @@ public class HomeController {
         OSMTokenController OSMTokenController = new OSMTokenController();
         String osmToken = OSMTokenController.getToken();
 
+        VNFController vnfController = new VNFController();
+        vnfController.setToken(osmToken);
+        model.addAttribute("vnfs", vnfController.getVNFs());
+
         // NS List
         NSController nsController = new NSController();
         nsController.setToken(osmToken);

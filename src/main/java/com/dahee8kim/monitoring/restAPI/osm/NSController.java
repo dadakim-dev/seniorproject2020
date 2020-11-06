@@ -1,6 +1,7 @@
 package com.dahee8kim.monitoring.restAPI.osm;
 
 import com.dahee8kim.monitoring.domain.osm.NS;
+import com.dahee8kim.monitoring.domain.osm.VNF;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -25,20 +26,34 @@ public class NSController {
         JSONParser parser = new JSONParser();
 
         try {
-            JSONObject ns_ = (JSONObject) parser.parse(text);
-            ns.setId(ns_.get("_id").toString());
-            ns.setName(ns_.get("name").toString());
-            ns.setDescription(ns_.get("description").toString());
-            ns.setNsState(ns_.get("nsState").toString());
-            ns.setOperationalStatus(ns_.get("operational-status").toString());
-            ns.setConfigStatus(ns_.get("config-status").toString());
-            ns.setDescription(ns_.get("detailed-status").toString());
-            JSONObject deploy = (JSONObject) parser.parse(ns_.get("deploymentStatus").toString());
+            JSONObject jsonData = (JSONObject) parser.parse(text);
+
+            // get ns id
+            ns.setId(jsonData.get("_id").toString());
+//            ns.setName(ns_.get("name").toString());
+//            ns.setDescription(ns_.get("description").toString());
+//            ns.setNsState(ns_.get("nsState").toString());
+//            ns.setOperationalStatus(ns_.get("operational-status").toString());
+//            ns.setConfigStatus(ns_.get("config-status").toString());
+//            ns.setDescription(ns_.get("detailed-status").toString());
+
+            // get vim net id
+            JSONObject deploy = (JSONObject) parser.parse(jsonData.get("deploymentStatus").toString());
             JSONArray nets = (JSONArray) parser.parse(deploy.get("nets").toString());
             JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
             ns.setVim_net_id(net.get("vim_net_id").toString());
-            System.out.println(ns.getVim_net_id());
 
+            JSONArray vnfs = (JSONArray) parser.parse(deploy.get("vnfs").toString());
+            vnfs.forEach(vnfData -> {
+                try {
+                    JSONObject vnf_ = (JSONObject) parser.parse(vnfData.toString());
+                    ns.addVnfIds(vnf_.get("vnf_id").toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            });
+
+//            ns.setVnfs(VNFs);
         } catch (ParseException e) {
             e.printStackTrace();
         }
