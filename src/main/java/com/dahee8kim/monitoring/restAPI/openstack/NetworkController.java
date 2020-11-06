@@ -1,5 +1,6 @@
 package com.dahee8kim.monitoring.restAPI.openstack;
 
+import com.dahee8kim.monitoring.domain.openstack.NetworkInterface;
 import com.dahee8kim.monitoring.domain.openstack.Router;
 import com.dahee8kim.monitoring.domain.osm.Network;
 import org.json.simple.JSONArray;
@@ -102,6 +103,50 @@ public class NetworkController {
         }
 
         return routers;
+    }
+
+    public NetworkInterface getNetworkInterface(String data) {
+        NetworkInterface networkInterface = new NetworkInterface();
+
+        try {
+            JSONObject net = (JSONObject) jsonParser.parse(data);
+            networkInterface.setId(net.get("id").toString());
+            networkInterface.setName(net.get("name").toString());
+            networkInterface.setStatus(net.get("status").toString());
+            networkInterface.setTenantId(net.get("tenant_id").toString());
+            networkInterface.setDeviceId(net.get("device_id").toString());
+            networkInterface.setNetworkId(net.get("network_id").toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return networkInterface;
+    }
+
+    public ArrayList<NetworkInterface> getNetworkInterfaces() {
+        ArrayList<NetworkInterface> networkInterfaces = new ArrayList<>();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.set("X-Auth-Token", this.token);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url +  "ports", HttpMethod.GET, request, String.class);
+
+        JSONObject jsonData = null;
+        try {
+            jsonData = (JSONObject) jsonParser.parse(response.getBody());
+            JSONArray ports = (JSONArray) jsonParser.parse(jsonData.get("ports").toString());
+            ports.forEach(portData -> {
+                networkInterfaces.add(getNetworkInterface(portData.toString()));
+            });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return networkInterfaces;
     }
 }
 
