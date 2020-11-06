@@ -3,7 +3,7 @@ package com.dahee8kim.monitoring.restAPI.openstack;
 
 import com.dahee8kim.monitoring.domain.openstack.NetworkInterface;
 import com.dahee8kim.monitoring.domain.openstack.NetworkList;
-import com.dahee8kim.monitoring.domain.openstack.Routers;
+import com.dahee8kim.monitoring.domain.openstack.Router;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,38 +17,38 @@ import java.util.Collections;
 @RestController
 public class NetworkTopologyController {
     private String token;
-    private String url = "http://3.35.26.6:9696/v2.0/";
+            private String url = "http://3.35.26.6:9696/v2.0/";
 
-    public String getToken() { return token; }
-    public void setToken(String token) { this.token = token; }
+            public String getToken() { return token; }
+            public void setToken(String token) { this.token = token; }
 
-    private ArrayList<NetworkList> netslist = new ArrayList<>();
-    private ArrayList<Routers> routerslist = new ArrayList<>();
-    private ArrayList<NetworkInterface> interfacelist = new ArrayList<>();
+            private ArrayList<NetworkList> netslist = new ArrayList<>();
+            private ArrayList<Router> routerslist = new ArrayList<>();
+            private ArrayList<NetworkInterface> interfacelist = new ArrayList<>();
 
-    public ArrayList<NetworkList> getNetworkList(){
-        this.getNetworks();
-        return netslist;
-    }
-    public ArrayList<Routers> getRouterslist(){
-        this.getRouters();
-        return routerslist;
-    }
-    public ArrayList<NetworkInterface> getInterfacelist(){
-        this.getInterfaces();
-        return interfacelist;
-    }
+            public ArrayList<NetworkList> getNetworkList(){
+                this.getNetworks();
+                return netslist;
+            }
+            public ArrayList<Router> getRouterslist(){
+                this.getRouters();
+                return routerslist;
+            }
+            public ArrayList<NetworkInterface> getInterfacelist(){
+                this.getInterfaces();
+                return interfacelist;
+            }
 
-    public void getNetworks(){
-        try{
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.set("X-Auth-Token", this.token);
+            public void getNetworks(){
+                try{
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                    headers.set("X-Auth-Token", this.token);
 
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.exchange(this.url +  "/networks", HttpMethod.GET, request, String.class);
+                    HttpEntity<String> request = new HttpEntity<>(headers);
+                    RestTemplate restTemplate = new RestTemplate();
+                    ResponseEntity<String> response = restTemplate.exchange(this.url +  "/networks", HttpMethod.GET, request, String.class);
 
             JSONParser parser = new JSONParser();
             JSONObject data = (JSONObject) parser.parse(response.getBody());
@@ -86,12 +86,12 @@ public class NetworkTopologyController {
             JSONArray routers = (JSONArray) parser.parse(data.get("routers").toString());
 
             for(int i = 0; i < routers.size(); i++){
-                Routers route = new Routers();
+                Router route = new Router();
                 JSONObject net_data = (JSONObject) routers.get(i);
                 route.setId(net_data.get("id").toString());
                 route.setName(net_data.get("name").toString());
                 route.setStatus(net_data.get("status").toString());
-                route.setTenant_id(net_data.get("tenant_id").toString());
+                route.setTenantId(net_data.get("tenant_id").toString());
                 routerslist.add(route);
             }
 
