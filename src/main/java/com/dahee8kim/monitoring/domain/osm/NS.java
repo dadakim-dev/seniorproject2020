@@ -1,5 +1,7 @@
 package com.dahee8kim.monitoring.domain.osm;
 
+import java.util.ArrayList;
+
 public class NS {
     private String id;
     private String name;
@@ -10,6 +12,20 @@ public class NS {
     private String detailedStatus;
     private String errorDetail;
     private String vim_net_id;
+    private ArrayList<String> vnfIds;
+
+    public ArrayList<String> getVnfIds() {
+        return vnfIds;
+    }
+
+    public void setVnfIds(ArrayList<String> vnfIds) {
+        this.vnfIds = vnfIds;
+    }
+
+    public void addVnfIds(String vnfId) {
+        if(vnfIds == null) vnfIds = new ArrayList<>();
+        this.vnfIds.add(vnfId);
+    }
 
     public String getVim_net_id() {
         return vim_net_id;

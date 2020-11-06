@@ -69,4 +69,19 @@ public class VNFController {
 
         return VNFs;
     }
+
+    public VNF getVNF(String osmId) {
+        String url = "http://3.35.26.6:8888/osm/nslcm/v1/vnf_instances/" + osmId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        return parseVNF(response.getBody());
+    }
 }
