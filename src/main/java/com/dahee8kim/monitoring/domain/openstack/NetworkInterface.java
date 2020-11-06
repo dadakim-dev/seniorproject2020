@@ -3,11 +3,11 @@ package com.dahee8kim.monitoring.domain.openstack;
 public class NetworkInterface {
     private String id;
     private String name;
-    private String network_id;
-    private String tenant_id;
+    private String networkId;
+    private String tenantId;
     private String status;
-    private String device_id;
-    private String subnet_id;
+    private String deviceId;
+    private String subnetId;
 
     public String getId() {
         return id;
@@ -25,20 +25,20 @@ public class NetworkInterface {
         this.name = name;
     }
 
-    public String getNetwork_id() {
-        return network_id;
+    public String getNetworkId() {
+        return networkId;
     }
 
-    public void setNetwork_id(String network_id) {
-        this.network_id = network_id;
+    public void setNetworkId(String networkId) {
+        this.networkId = networkId;
     }
 
-    public String getTenant_id() {
-        return tenant_id;
+    public String getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(String tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
     public String getStatus() {
@@ -49,19 +49,19 @@ public class NetworkInterface {
         this.status = status;
     }
 
-    public String getDevice_id() {
-        return device_id;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setDevice_id(String device_id) {
-        this.device_id = device_id;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public String getSubnet_id() {
-        return subnet_id;
+    public String getSubnetId() {
+        return subnetId;
     }
 
-    public void setSubnet_id(String subnet_id) {
-        this.subnet_id = subnet_id;
+    public void setSubnetId(String subnetId) {
+        this.subnetId = subnetId;
     }
 }

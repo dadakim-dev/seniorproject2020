@@ -1,10 +1,9 @@
 package com.dahee8kim.monitoring.domain.openstack;
 
-public class Routers {
-
+public class Router {
     private String id;
     private String name;
-    private String tenant_id;
+    private String tenantId;
     private String status;
 
     public String getId() {
@@ -23,12 +22,12 @@ public class Routers {
         this.name = name;
     }
 
-    public String getTenant_id() {
-        return tenant_id;
+    public String getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(String tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
     public String getStatus() {
