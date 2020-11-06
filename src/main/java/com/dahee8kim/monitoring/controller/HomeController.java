@@ -21,11 +21,10 @@ public class HomeController {
     public String home(Model model) {
         // OSM Token
         OSMTokenController OSMTokenController = new OSMTokenController();
-        Token token = OSMTokenController.getToken();
 
         // NS List
         NSController nsController = new NSController();
-        nsController.setToken(token.getToken());
+        nsController.setToken(OSMTokenController.getToken());
         ArrayList<NS> ns = nsController.getNS();
 
         model.addAttribute("ns", ns);

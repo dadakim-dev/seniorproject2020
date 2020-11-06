@@ -169,54 +169,56 @@
     </section>
 </div>
 
-<script>
-    $(function() {
-        $(".vmRunningChart").each(function(e, el) {
-            var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
-            // var data = dataSet[e];
-            // console.log(data);
-            var myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    datasets: [{
-                        data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                        backgroundColor: "rgba(0, 123, 255, 0.1)",
-                        borderColor: "rgba(0, 123, 255, 1)",
-                        borderWidth: 1,
-                        lineTension: 0,
-                        pointRadius: 0
-                    }]
+<script th:inline="javascript">
+$(function() {
+    var NSs = [[${NSs}]];
+    console.log(NSs);
+    $(".vmRunningChart").each(function(e, el) {
+        var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
+        // var data = dataSet[e];
+        // console.log(data);
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                datasets: [{
+                    data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    backgroundColor: "rgba(0, 123, 255, 0.1)",
+                    borderColor: "rgba(0, 123, 255, 1)",
+                    borderWidth: 1,
+                    lineTension: 0,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: false,
+                legend: {
+                    display: false
                 },
-                options: {
-                    responsive: false,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: false,
-                            gridLines: {
-                                display: false
-                            }
-                        }],
-                        yAxes: [{
-                            display: false,
-                            gridLines: {
-                                display: false
-                            },
-                            ticks: {
-                                beginAtZero: true,
-                                max: 2,
-                                stepValue: 1,
-                                steps: 2
-                            }
-                        }]
-                    }
+                scales: {
+                    xAxes: [{
+                        display: false,
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        display: false,
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            max: 2,
+                            stepValue: 1,
+                            steps: 2
+                        }
+                    }]
                 }
-            });
+            }
         });
     });
+});
 </script>
 </body>
 </html>
