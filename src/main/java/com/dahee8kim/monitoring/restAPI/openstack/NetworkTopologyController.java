@@ -53,7 +53,6 @@ public class NetworkTopologyController {
             JSONParser parser = new JSONParser();
             JSONObject data = (JSONObject) parser.parse(response.getBody());
             JSONArray networks = (JSONArray) parser.parse(data.get("networks").toString());
-
             for(int i = 0; i < networks.size(); i++){
                 NetworkList net = new NetworkList();
                 JSONObject net_data = (JSONObject) networks.get(i);
@@ -64,6 +63,7 @@ public class NetworkTopologyController {
                 net.setTenant_id(net_data.get("tenant_id").toString());
                 JSONArray subnet = (JSONArray) parser.parse(net_data.get("subnets").toString());
                 net.setSubnets(subnet);
+                netslist.add(net);
             }
 
         }catch (Exception e){
@@ -92,6 +92,7 @@ public class NetworkTopologyController {
                 route.setName(net_data.get("name").toString());
                 route.setStatus(net_data.get("status").toString());
                 route.setTenant_id(net_data.get("tenant_id").toString());
+                routerslist.add(route);
             }
 
         }catch (Exception e){
@@ -122,16 +123,12 @@ public class NetworkTopologyController {
                 port.setTenant_id(net_data.get("tenant_id").toString());
                 port.setDevice_id(net_data.get("device_id").toString());
                 port.setNetwork_id(net_data.get("network_id").toString());
-
+                interfacelist.add(port);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
-
-
-
 }
 
