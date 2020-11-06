@@ -120,9 +120,9 @@ public class NetworkTopologyController {
                 port.setId(net_data.get("id").toString());
                 port.setName(net_data.get("name").toString());
                 port.setStatus(net_data.get("status").toString());
-                port.setTenant_id(net_data.get("tenant_id").toString());
-                port.setDevice_id(net_data.get("device_id").toString());
-                port.setNetwork_id(net_data.get("network_id").toString());
+                port.setTenantId(net_data.get("tenant_id").toString());
+                port.setDeviceId(net_data.get("device_id").toString());
+                port.setNetworkId(net_data.get("network_id").toString());
                 interfacelist.add(port);
             }
 
