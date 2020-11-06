@@ -14,95 +14,61 @@ import java.util.Collections;
 
 @RestController
 public class NSController {
+    private String token;
+
     public void setToken(String token) {
         this.token = token;
     }
 
-    private String token;
-
-    public ArrayList<NS> getNS() {
-        /*
-        * curl --location
-        * --request GET 'http://3.35.234.229:8888/osm/nslcm/v1/ns_instances'
-        * --header 'Content-Type: application/json'
-        * --header 'Accept: application/json'
-        * --header 'Authorization: Bearer  gAAAAABfli-S7mIA2YIIO_UrZyuWIvVObfD_4Y09HxQ4Hw28H0bey09o4L8N1rw3MPPI5_yklWOhA_AHT8x7hTgggCqAWP9035J1wxdLf_ivvQboo3HjM5-ZBbw5G_sR4Q5hBtKfGyOtjCnl_Y4JgEoNhz5UoBAi6bPjpFV_w4WNlhwuRS0BfAJSAAIecwfLP8KXtJb8CUh-'
-        * */
-
-        ArrayList<NS> nsArray = new ArrayList<NS>();
+    public NS parseNS(String text) {
+        NS ns = new NS();
+        JSONParser parser = new JSONParser();
 
         try {
-            String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances";
+            JSONObject ns_ = (JSONObject) parser.parse(text);
+            ns.setId(ns_.get("_id").toString());
+            ns.setName(ns_.get("name").toString());
+            ns.setDescription(ns_.get("description").toString());
+            ns.setNsState(ns_.get("nsState").toString());
+            ns.setOperationalStatus(ns_.get("operational-status").toString());
+            ns.setConfigStatus(ns_.get("config-status").toString());
+            ns.setDescription(ns_.get("detailed-status").toString());
+            JSONObject deploy = (JSONObject) parser.parse(ns_.get("deploymentStatus").toString());
+            JSONArray nets = (JSONArray) parser.parse(deploy.get("nets").toString());
+            JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
+            ns.setVim_net_id(net.get("vim_net_id").toString());
+            System.out.println(ns.getVim_net_id());
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.setBearerAuth(token);
-
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-
-            JSONParser parser = new JSONParser();
-            JSONArray ns = (JSONArray) parser.parse(response.getBody());
-
-            for (int i = 0; i < ns.size(); i++) {
-                NS ns_ = new NS();
-                JSONObject n = (JSONObject) parser.parse(ns.get(i).toString());
-                ns_.setId(n.get("_id").toString());
-                ns_.setName(n.get("name").toString());
-                ns_.setDescription(n.get("description").toString());
-                ns_.setNsState(n.get("nsState").toString());
-                ns_.setOperationalStatus(n.get("operational-status").toString());
-                ns_.setConfigStatus(n.get("config-status").toString());
-                ns_.setDetailedStatus(n.get("detailed-status").toString());
-//                ns_.setErrorDetail(n.get("errorDetail").toString());
-
-                nsArray.add(ns_);
-            }
-        } catch (Exception e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return nsArray;
+        return ns;
     }
 
-    public String getNSDetail(String id) {
+    public ArrayList<NS> getNS() {
+        ArrayList<NS> nsArray = new ArrayList<NS>();
+
+        String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        JSONParser parser = new JSONParser();
         try {
-            String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances/" + id;
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.setBearerAuth(token);
-
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-
-            System.out.println(response.getBody().toString());
-
-            JSONParser parser = new JSONParser();
-//            JSONArray ns = (JSONArray) parser.parse(response.getBody());
-
-//            for (int i = 0; i < ns.size(); i++) {
-//                NS ns_ = new NS();
-//                JSONObject n = (JSONObject) parser.parse(ns.get(i).toString());
-//                ns_.setId(n.get("_id").toString());
-//                ns_.setName(n.get("name").toString());
-//                ns_.setDescription(n.get("description").toString());
-//                ns_.setNsState(n.get("nsState").toString());
-//                ns_.setOperationalStatus(n.get("operational-status").toString());
-//                ns_.setConfigStatus(n.get("config-status").toString());
-//                ns_.setDetailedStatus(n.get("detailed-status").toString());
-////                ns_.setErrorDetail(n.get("errorDetail").toString());
-//
-//                nsArray.add(ns_);
-//            }
-        } catch (Exception e) {
+            JSONArray ns = (JSONArray) parser.parse(response.getBody());
+            for (int i = 0; i < ns.size(); i++) {
+                nsArray.add(parseNS(ns.get(i).toString()));
+            }
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        return "";
+        return nsArray;
     }
 }
