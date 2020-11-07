@@ -44,6 +44,7 @@ public class VNFController {
 
     public ArrayList<VNF> getVNFs() {
         ArrayList<VNF> VNFs = new ArrayList<>();
+
         String url = "http://3.35.26.6:8888/osm/nslcm/v1/vnf_instances";
 
         HttpHeaders headers = new HttpHeaders();
