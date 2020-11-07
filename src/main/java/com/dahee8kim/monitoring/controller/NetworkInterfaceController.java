@@ -67,7 +67,7 @@ public class NetworkInterfaceController {
         });
 
         // export network list including NS, VNF to model
-        model.addAttribute("Networks", networks);
+        model.addAttribute("networks", networks);
 
         return "/network/index";
     }
