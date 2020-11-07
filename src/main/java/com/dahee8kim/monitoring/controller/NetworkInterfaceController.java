@@ -41,7 +41,7 @@ public class NetworkInterfaceController {
         networkController.setToken(openStackToken);
 
         // Get NS list, VNF list, network list
-        ArrayList<NS> NSs = nsController.getNS();
+        ArrayList<NS> NSs = nsController.getNSs();
         ArrayList<VNF> VNFs = vnfController.getVNFs();
         ArrayList<Network> networks = networkController.getNetworks();
 

@@ -30,12 +30,12 @@ public class NSController {
 
             // get ns id
             ns.setId(jsonData.get("_id").toString());
-//            ns.setName(ns_.get("name").toString());
-//            ns.setDescription(ns_.get("description").toString());
-//            ns.setNsState(ns_.get("nsState").toString());
-//            ns.setOperationalStatus(ns_.get("operational-status").toString());
-//            ns.setConfigStatus(ns_.get("config-status").toString());
-//            ns.setDescription(ns_.get("detailed-status").toString());
+            ns.setName(jsonData.get("name").toString());
+            ns.setDescription(jsonData.get("description").toString());
+            ns.setNsState(jsonData.get("nsState").toString());
+            ns.setOperationalStatus(jsonData.get("operational-status").toString());
+            ns.setConfigStatus(jsonData.get("config-status").toString());
+            ns.setDetailedStatus(jsonData.get("detailed-status").toString());
 
             // get vim net id
             JSONObject deploy = (JSONObject) parser.parse(jsonData.get("deploymentStatus").toString());
@@ -53,7 +53,7 @@ public class NSController {
         return ns;
     }
 
-    public ArrayList<NS> getNS() {
+    public ArrayList<NS> getNSs() {
         ArrayList<NS> nsArray = new ArrayList<NS>();
         String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances";
 
