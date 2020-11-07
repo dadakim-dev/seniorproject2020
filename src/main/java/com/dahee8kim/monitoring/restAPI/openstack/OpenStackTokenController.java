@@ -18,14 +18,14 @@ import java.util.Objects;
 public class OpenStackTokenController {
     public String getToken() {
         try {
-            String url = "http://15.164.103.73:5000/v3/auth/tokens?nocatalog";
+            String url = "http://3.35.26.6:5000/v3/auth/tokens?nocatalog";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
             JSONParser parser = new JSONParser();
-            JSONObject rawData = (JSONObject) parser.parse("{\"auth\": {\"identity\":{ \"methods\" : [\"password\"],\"password\":{\"user\":{\"domain\":{\"name\":\"default\"},\"name\":\"admin\", \"password\":\"u9Ax9Vujkuxim2r3rbSaIgPhVSubHb9Z\"}}},\"scope\":{\"project\":{ \"domain\":{\"name\":\"default\"}, \"name\":\"admin\"}}}}");
+            JSONObject rawData = (JSONObject) parser.parse("{\"auth\": {\"identity\":{ \"methods\" : [\"password\"],\"password\":{\"user\":{\"domain\":{\"name\":\"default\"},\"name\":\"admin\", \"password\":\"6HQQymi8pp7AH8UHeAOnY0qtcgHuYwRr\"}}},\"scope\":{\"project\":{ \"domain\":{\"name\":\"default\"}, \"name\":\"admin\"}}}}");
             HttpEntity<String> request = new HttpEntity<>(rawData.toString(), headers);
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);

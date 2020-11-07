@@ -1,14 +1,10 @@
 package com.dahee8kim.monitoring.controller;
 
-import com.dahee8kim.monitoring.domain.openstack.Instance;
 import com.dahee8kim.monitoring.domain.osm.NS;
-import com.dahee8kim.monitoring.domain.osm.Token;
 import com.dahee8kim.monitoring.restAPI.openstack.OpenStackTokenController;
-import com.dahee8kim.monitoring.restAPI.openstack.ResourceController;
-import com.dahee8kim.monitoring.restAPI.openstack.VMInstanceController;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
-import com.dahee8kim.monitoring.restAPI.prometheus.VMStatusController;
+import com.dahee8kim.monitoring.restAPI.osm.VNFController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +17,15 @@ public class HomeController {
     public String home(Model model) {
         // OSM Token
         OSMTokenController OSMTokenController = new OSMTokenController();
+        String osmToken = OSMTokenController.getToken();
+
+        VNFController vnfController = new VNFController();
+        vnfController.setToken(osmToken);
+        model.addAttribute("vnfs", vnfController.getVNFs());
 
         // NS List
         NSController nsController = new NSController();
-        nsController.setToken(OSMTokenController.getToken());
+        nsController.setToken(osmToken);
         ArrayList<NS> ns = nsController.getNS();
 
         model.addAttribute("ns", ns);
@@ -33,16 +34,6 @@ public class HomeController {
         OpenStackTokenController openStackTokenController = new OpenStackTokenController();
         String openStackToken = openStackTokenController.getToken();
 
-        // Resource Info
-        ResourceController resourceController = new ResourceController();
-        resourceController.setToken(openStackToken);
-        model.addAttribute("resource", resourceController.getResource());
-
-        // OpenStack VM Instance | OSM VM Instance
-        VMInstanceController vmInstanceController = new VMInstanceController();
-        vmInstanceController.setToken(openStackToken);
-        ArrayList<Instance> instance = vmInstanceController.getInstance();
-        model.addAttribute("instance", instance);
 
         return "index";
     }
