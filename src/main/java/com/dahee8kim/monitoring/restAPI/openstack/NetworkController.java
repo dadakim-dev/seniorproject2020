@@ -28,7 +28,7 @@ public class NetworkController {
         this.token = token;
     }
 
-    public Network getNetwork(String data) {
+    public Network parseNetwork(String data) {
         Network network = new Network();
 
         try {
@@ -56,7 +56,7 @@ public class NetworkController {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(response.getBody());
             JSONArray networks_ = (JSONArray) jsonParser.parse(jsonObject.get("networks").toString());
             networks_.forEach(networkData -> {
-                networks.add(getNetwork(networkData.toString()));
+                networks.add(parseNetwork(networkData.toString()));
             });
         } catch (ParseException e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class NetworkController {
         return networks;
     }
 
-    public Router getRouter(String data) {
+    public Router parseRouter(String data) {
         Router router = new Router();
 
         try {
@@ -96,7 +96,7 @@ public class NetworkController {
             JSONObject jsonData = (JSONObject) jsonParser.parse(response.getBody());
             JSONArray routers_ = (JSONArray) jsonParser.parse(jsonData.get("routers").toString());
             routers_.forEach(routerData -> {
-                routers.add(getRouter(routerData.toString()));
+                routers.add(parseRouter(routerData.toString()));
             });
         } catch (ParseException e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class NetworkController {
         return routers;
     }
 
-    public NetworkInterface getNetworkInterface(String data) {
+    public NetworkInterface parseNetworkInterface(String data) {
         NetworkInterface networkInterface = new NetworkInterface();
 
         try {
@@ -140,7 +140,7 @@ public class NetworkController {
             jsonData = (JSONObject) jsonParser.parse(response.getBody());
             JSONArray ports = (JSONArray) jsonParser.parse(jsonData.get("ports").toString());
             ports.forEach(portData -> {
-                networkInterfaces.add(getNetworkInterface(portData.toString()));
+                networkInterfaces.add(parseNetworkInterface(portData.toString()));
             });
         } catch (ParseException e) {
             e.printStackTrace();

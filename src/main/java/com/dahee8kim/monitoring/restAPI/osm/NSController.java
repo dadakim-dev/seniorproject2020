@@ -41,13 +41,11 @@ public class NSController {
             JSONObject deploy = (JSONObject) parser.parse(jsonData.get("deploymentStatus").toString());
             JSONArray nets = (JSONArray) parser.parse(deploy.get("nets").toString());
             JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
-            ns.setVim_net_id(net.get("vim_net_id").toString());
+            ns.setVimNetId(net.get("vim_net_id").toString());
 
             JSONArray vnfrRefs = (JSONArray) parser.parse(jsonData.get("constituent-vnfr-ref").toString());
             JSONArray vnfs = (JSONArray) parser.parse(deploy.get("vnfs").toString());
             vnfrRefs.forEach(vnfrRef -> ns.addVnfIds(vnfrRef.toString()));
-
-//            ns.setVnfs(VNFs);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -80,25 +78,4 @@ public class NSController {
 
         return nsArray;
     }
-
-//    public String getNSDetail(String id) {
-//        try {
-//            String url = "http://54.180.149.38:8888/osm/nslcm/v1/ns_instances/" + id;
-//
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.setContentType(MediaType.APPLICATION_JSON);
-//            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-//            headers.setBearerAuth(token);
-//
-//            HttpEntity<String> request = new HttpEntity<>(headers);
-//            RestTemplate restTemplate = new RestTemplate();
-//            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-//
-//            JSONParser parser = new JSONParser();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return "";
-//    }
 }

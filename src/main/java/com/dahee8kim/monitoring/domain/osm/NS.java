@@ -11,7 +11,7 @@ public class NS {
     private String configStatus;
     private String detailedStatus;
     private String errorDetail;
-    private String vim_net_id;
+    private String vimNetId;
     private ArrayList<String> vnfIds;
     private ArrayList<VNF> VNFs;
 
@@ -28,12 +28,12 @@ public class NS {
         this.vnfIds.add(vnfId);
     }
 
-    public String getVim_net_id() {
-        return vim_net_id;
+    public String getVimNetId() {
+        return vimNetId;
     }
 
-    public void setVim_net_id(String vim_net_id) {
-        this.vim_net_id = vim_net_id;
+    public void setVimNetId(String vimNetId) {
+        this.vimNetId = vimNetId;
     }
 
     public String getId() {
