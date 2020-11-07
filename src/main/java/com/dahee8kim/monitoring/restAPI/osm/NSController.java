@@ -43,15 +43,9 @@ public class NSController {
             JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
             ns.setVim_net_id(net.get("vim_net_id").toString());
 
+            JSONArray vnfrRefs = (JSONArray) parser.parse(jsonData.get("constituent-vnfr-ref").toString());
             JSONArray vnfs = (JSONArray) parser.parse(deploy.get("vnfs").toString());
-            vnfs.forEach(vnfData -> {
-                try {
-                    JSONObject vnf_ = (JSONObject) parser.parse(vnfData.toString());
-                    ns.addVnfIds(vnf_.get("vnf_id").toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            });
+            vnfrRefs.forEach(vnfrRef -> ns.addVnfIds(vnfrRef.toString()));
 
 //            ns.setVnfs(VNFs);
         } catch (ParseException e) {
