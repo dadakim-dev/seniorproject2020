@@ -14,6 +14,16 @@ public class NS {
     private String vim_net_id;
     private ArrayList<String> vnfIds;
 
+    public ArrayList<VNF> getVNFs() {
+        return VNFs;
+    }
+
+    public void setVNFs(ArrayList<VNF> VNFs) {
+        this.VNFs = VNFs;
+    }
+
+    private ArrayList<VNF> VNFs;
+
     public ArrayList<String> getVnfIds() {
         return vnfIds;
     }
