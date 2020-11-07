@@ -65,71 +65,71 @@
                 </div>
             </div>
         </div>
-<!--        <div class="row usage">-->
-<!--            <div class="col-sm-4">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-body">-->
-<!--                        <div class="cardHeader">-->
-<!--                            <h3 class="card-title">VCPU Usage</h3>-->
-<!--                            <a href="#" class="btn btn-sm btn-primary">Detail</a>-->
-<!--                        </div>-->
-<!--                        <div class="card-text">-->
-<!--                            <div class="progress" style="height: 15px;">-->
-<!--                                <div class="progress-bar"-->
-<!--                                     role="progressbar"-->
-<!--                                     th:style="'width: calc(' + ${resource.getUsedVCPU()} + '/' + ${resource.getTotalVCPU()} + '* 100%)'"-->
-<!--                                     th:aria-valuenow="${resource.getUsedVCPU()}"-->
-<!--                                     th:aria-valuemax="${resource.getTotalVCPU()}"-->
-<!--                                     aria-valuemin="0"-->
-<!--                                     th:text="${resource.getUsedVCPU()} + ' cores'"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-sm-4">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-body">-->
-<!--                        <div class="cardHeader">-->
-<!--                            <h3 class="card-title">Disk Usage</h3>-->
-<!--                            <a href="#" class="btn btn-sm btn-primary">Detail</a>-->
-<!--                        </div>-->
-<!--                        <div class="card-text">-->
-<!--                            <div class="progress" style="height: 15px;">-->
-<!--                                <div class="progress-bar"-->
-<!--                                     role="progressbar"-->
-<!--                                     th:style="'width: calc(' + ${resource.getUsedDisk()} + '/' + ${resource.getTotalDisk()} + '* 100%)'"-->
-<!--                                     th:aria-valuenow="${resource.getUsedDisk()}"-->
-<!--                                     th:aria-valuemax="${resource.getTotalDisk()}"-->
-<!--                                     aria-valuemin="0"-->
-<!--                                     th:text="${resource.getUsedDisk()} + ' GB'"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-sm-4">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-body">-->
-<!--                        <div class="cardHeader">-->
-<!--                            <h3 class="card-title">Memory Usage</h3>-->
-<!--                            <a href="#" class="btn btn-sm btn-primary">Detail</a>-->
-<!--                        </div>-->
-<!--                        <div class="card-text">-->
-<!--                            <div class="progress" style="height: 15px;">-->
-<!--                                <div class="progress-bar"-->
-<!--                                     role="progressbar"-->
-<!--                                     th:style="'width: calc(' + ${resource.getUsedMemory()} + '/' + ${resource.getTotalMemory()} + '* 100%)'"-->
-<!--                                     th:aria-valuenow="${resource.getUsedMemory()}"-->
-<!--                                     th:aria-valuemax="${resource.getTotalMemory()}"-->
-<!--                                     aria-valuemin="0"-->
-<!--                                     th:text="${resource.getUsedMemory() / 1024} + ' GB'"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="row usage">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cardHeader">
+                            <h3 class="card-title">VCPU Usage</h3>
+                            <a href="#" class="btn btn-sm btn-primary">Detail</a>
+                        </div>
+                        <div class="card-text">
+                            <div class="progress" style="height: 15px;">
+                                <div class="progress-bar"
+                                     role="progressbar"
+                                     th:style="'width: calc(' + ${resource.usedVCPU} + '/' + ${resource.totalVCPU} + '* 100%)'"
+                                     th:aria-valuenow="${resource.usedVCPU}"
+                                     th:aria-valuemax="${resource.totalVCPU}"
+                                     aria-valuemin="0"
+                                     th:text="${resource.usedVCPU} + ' cores'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cardHeader">
+                            <h3 class="card-title">Disk Usage</h3>
+                            <a href="#" class="btn btn-sm btn-primary">Detail</a>
+                        </div>
+                        <div class="card-text">
+                            <div class="progress" style="height: 15px;">
+                                <div class="progress-bar"
+                                     role="progressbar"
+                                     th:style="'width: calc(' + ${resource.usedDisk} + '/' + ${resource.totalDisk} + '* 100%)'"
+                                     th:aria-valuenow="${resource.usedDisk}"
+                                     th:aria-valuemax="${resource.totalDisk}"
+                                     aria-valuemin="0"
+                                     th:text="${resource.usedDisk} + ' GB'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cardHeader">
+                            <h3 class="card-title">Memory Usage</h3>
+                            <a href="#" class="btn btn-sm btn-primary">Detail</a>
+                        </div>
+                        <div class="card-text">
+                            <div class="progress" style="height: 15px;">
+                                <div class="progress-bar"
+                                     role="progressbar"
+                                     th:style="'width: calc(' + ${resource.usedMemory} + '/' + ${resource.totalMemory} + '* 100%)'"
+                                     th:aria-valuenow="${resource.usedMemory}"
+                                     th:aria-valuemax="${resource.totalMemory}"
+                                     aria-valuemin="0"
+                                     th:text="${resource.usedMemory / 1024} + ' GB'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <!--        <div class="row vm">-->
 <!--            <div class="col-lg-12">-->
 <!--                <div class="card">-->
@@ -223,7 +223,8 @@
 <script th:inline="javascript">
     $(function() {
         var NSs = [[${NSs}]];
-        console.log(NSs);
+        var resource = [[${resource}]];
+        console.log(resource);
 
         $("body").on("click", ".nsStatus", function() {
             var idx = parseInt($(this).attr("data-idx"));
