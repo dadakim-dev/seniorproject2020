@@ -61,7 +61,7 @@ public class NetworkInterfaceController {
         networks.forEach(network -> {
             networks.get(networkIndex.getAndIncrement())
                     .setNSs((ArrayList<NS>) NSs.stream()
-                            .filter(ns -> ns.getVim_net_id().equals(network.getId()))
+                            .filter(ns -> ns.getVimNetId().equals(network.getId()))
                             .collect(Collectors.toList())
                     );
         });
