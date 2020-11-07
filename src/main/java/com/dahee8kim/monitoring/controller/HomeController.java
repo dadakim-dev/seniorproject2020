@@ -30,6 +30,7 @@ public class HomeController {
         resourceController.setToken(openStackToken);
         model.addAttribute("resource", resourceController.getResource());
 
+        // get vm instance and add to model
         VMInstanceController vmInstanceController = new VMInstanceController();
         vmInstanceController.setToken(openStackToken);
         model.addAttribute("VMs", vmInstanceController.getInstance());

@@ -10,9 +10,9 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class VMInstanceController {
@@ -49,13 +49,18 @@ public class VMInstanceController {
             JSONObject jsonData = (JSONObject) jsonParser.parse(response.getBody().toString());
             JSONArray servers = (JSONArray) jsonData.get("servers");
 
+            String startTime = String.format("%.3f", (System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(30 * 9)) * 0.001);
+            String endTime = String.format("%.3f", System.currentTimeMillis() * 0.001);
+
             for(int i = 0; i < servers.size(); i++) {
                 Instance instance_ = new Instance();
                 JSONObject server_ = (JSONObject) servers.get(i);
                 instance_.setId(server_.get("id").toString());
                 instance_.setName(server_.get("name").toString());
                 instance_.setStatus(getVMInstanceDetail(instance_.getId()));
-                instance_.setVmStatusData(vmStatusController.getVMStatusDataSet(instance_.getId()));
+                instance_.setVmStatusData(
+                        vmStatusController.getVMStatus(instance_.getId(), startTime, endTime, "30s")
+                );
                 this.instance.add(instance_);
             }
         } catch (ParseException e) {
