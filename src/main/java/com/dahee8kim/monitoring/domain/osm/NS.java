@@ -13,15 +13,6 @@ public class NS {
     private String errorDetail;
     private String vim_net_id;
     private ArrayList<String> vnfIds;
-
-    public ArrayList<VNF> getVNFs() {
-        return VNFs;
-    }
-
-    public void setVNFs(ArrayList<VNF> VNFs) {
-        this.VNFs = VNFs;
-    }
-
     private ArrayList<VNF> VNFs;
 
     public ArrayList<String> getVnfIds() {
@@ -107,5 +98,13 @@ public class NS {
 
     public void setErrorDetail(String errorDetail) {
         this.errorDetail = errorDetail;
+    }
+
+    public ArrayList<VNF> getVNFs() {
+        return VNFs;
+    }
+
+    public void setVNFs(ArrayList<VNF> VNFs) {
+        this.VNFs = VNFs;
     }
 }

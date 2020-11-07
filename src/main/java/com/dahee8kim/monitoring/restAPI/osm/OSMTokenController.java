@@ -32,7 +32,6 @@ public class OSMTokenController {
             JSONObject jsonData = (JSONObject) parser.parse(data);
 
             return jsonData.get("_id").toString();
-
 //            token.setProjectId(jsonData.get("project_id").toString());
 //            token.setToken(jsonData.get("_id").toString());
 //            token.setUserId(jsonData.get("user_id").toString());
