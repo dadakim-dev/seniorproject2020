@@ -1,6 +1,7 @@
 package com.dahee8kim.monitoring.controller;
 import com.dahee8kim.monitoring.restAPI.openstack.OpenStackTokenController;
 import com.dahee8kim.monitoring.restAPI.openstack.ResourceController;
+import com.dahee8kim.monitoring.restAPI.openstack.VMInstanceController;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,10 @@ public class HomeController {
         ResourceController resourceController = new ResourceController();
         resourceController.setToken(openStackToken);
         model.addAttribute("resource", resourceController.getResource());
+
+        VMInstanceController vmInstanceController = new VMInstanceController();
+        vmInstanceController.setToken(openStackToken);
+        model.addAttribute("VMs", vmInstanceController.getInstance());
 
         return "index";
     }
