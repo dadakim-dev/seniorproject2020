@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="200" style="border:1px solid #000000;"></canvas>
+
+<script>
+$(function() { // document on ready
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var networkList = [{
+        id : "test1",
+        name: "test1",
+        x: null,
+        y: null
+    },{
+        id: "test2",
+        name: "test2",
+        x: null,
+        y: null
+    },{
+        id : "test3",
+        name: "test3",
+        x: null,
+        y: null
+    }];
+    var color = ["red", "blue", "skyblue"];
+    var x = 30; y = 0; barWidth = 15; barHeight=175, barMargin = 100;
+    // how to use each
+    $(networkList).each(function(e, network) {
+        // e: index, el: element for loop
+        ctx.fillStyle=color[e];
+        console.log(network)
+        ctx.fillRect(x, y, barWidth, barHeight);
+        ctx.textAlign="center";
+        ctx.fillText(network.name, x + barWidth / 2, 190);
+        network.x = x;
+        network.y = y;
+        x += (barWidth + barMargin);
+        console.log(network);
+    });
+
+    var routerList = [{
+        name: "test-router",
+        x: null,
+        y: null
+    },{
+        name: "external-router",
+        x: null,
+        y: null
+    }];
+    var routerWidth = 20; routerHeight=15; routerMargin = 40;
+    x = (30 + barWidth+(barMargin/2) - (routerWidth/2)); y = 10;
+    $(routerList).each(function (e, router) {
+        ctx.fillStyle=color[e];
+        ctx.fillRect(x, y, routerWidth, routerHeight);
+        routerList.x = x;
+        routerList.y = y;
+        ctx.textAlign="center";
+        ctx.fillText(router.name, x + barWidth / 2, y + routerHeight + 10);
+        x += (barWidth + barMargin);
+        y += routerHeight;
+    })
+    //
+
+    var interfaceList = [{
+        id : "interface1",
+        name: "interface1",
+        x: null,
+        y: null,
+        networkid: "test1",
+        device_id:"test-router"
+    },{
+        id : "interface2",
+        name: "interface2",
+        x: null,
+        y: null,
+        networkid: "test2",
+        device_id:"test-router"
+    },{
+        id : "interface3",
+        name: "interface3",
+        x: null,
+        y: null,
+        networkid: "test1",
+        device_id:"external-router"
+    },{
+        id : "interface4",
+        name: "interface4",
+        x: null,
+        y: null,
+        networkid: "test3",
+        device_id:"external-router"
+    }];
+
+    var interfaceWidth = 60; interfaceHeight=2; interfaceMargin = 40;
+    x = (30 + barWidth+(barMargin/2) - (routerWidth/2)); y = 10 + 7.5;
+    $(interfaceList).each(function (e, interfaces) {
+        if (interfaces.)
+
+
+        ctx.fillStyle=color[e];
+        ctx.fillRect(x, y, interfaceWidth, interfaceHeight);
+        ctx.textAlign="center";
+        ctx.fillText(interfaces.name, x + barWidth / 2, y + routerHeight + 10);
+        x += (barWidth + barMargin);
+        y += routerHeight;
+    })
+});
+
+</script>
+</body>
+</html>
