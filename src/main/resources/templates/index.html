@@ -45,119 +45,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="n, obj: ${ns}">
+                                <tr th:each="ns, obj: ${NSs}">
                                     <td>
-                                        <a th:href="@{/ns/detail(id=${n.getId()})}" th:text="${n.getId()}"></a>
+                                        <a th:href="@{/ns/detail(id=${ns.id})}" th:text="${ns.id}"></a>
                                     </td>
                                     <td>
-                                        <a th:href="@{/ns/detail(id=${n.getId()})}" th:text="${n.getName()}"></a>
+                                        <a th:href="@{/ns/detail(id=${ns.id})}" th:text="${ns.name}"></a>
                                     </td>
-                                    <td th:text="${n.getDescription()}"></td>
+                                    <td th:text="${ns.description}"></td>
                                     <td>
-                                        <div class="btn btn-sm configStatus" th:text="${n.getConfigStatus()}"></div>
-                                        <div class="btn btn-sm nsStatus" th:data-idx="${obj.index}" th:text="${n.getNsState()}" data-toggle="modal" data-target="#detailedStatus"></div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row usage">
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="cardHeader">
-                            <h3 class="card-title">VCPU Usage</h3>
-                            <a href="#" class="btn btn-sm btn-primary">Detail</a>
-                        </div>
-                        <div class="card-text">
-                            <div class="progress" style="height: 15px;">
-                                <div class="progress-bar"
-                                     role="progressbar"
-                                     th:style="'width: calc(' + ${resource.getUsedVCPU()} + '/' + ${resource.getTotalVCPU()} + '* 100%)'"
-                                     th:aria-valuenow="${resource.getUsedVCPU()}"
-                                     th:aria-valuemax="${resource.getTotalVCPU()}"
-                                     aria-valuemin="0"
-                                     th:text="${resource.getUsedVCPU()} + ' cores'"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="cardHeader">
-                            <h3 class="card-title">Disk Usage</h3>
-                            <a href="#" class="btn btn-sm btn-primary">Detail</a>
-                        </div>
-                        <div class="card-text">
-                            <div class="progress" style="height: 15px;">
-                                <div class="progress-bar"
-                                     role="progressbar"
-                                     th:style="'width: calc(' + ${resource.getUsedDisk()} + '/' + ${resource.getTotalDisk()} + '* 100%)'"
-                                     th:aria-valuenow="${resource.getUsedDisk()}"
-                                     th:aria-valuemax="${resource.getTotalDisk()}"
-                                     aria-valuemin="0"
-                                     th:text="${resource.getUsedDisk()} + ' GB'"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="cardHeader">
-                            <h3 class="card-title">Memory Usage</h3>
-                            <a href="#" class="btn btn-sm btn-primary">Detail</a>
-                        </div>
-                        <div class="card-text">
-                            <div class="progress" style="height: 15px;">
-                                <div class="progress-bar"
-                                     role="progressbar"
-                                     th:style="'width: calc(' + ${resource.getUsedMemory()} + '/' + ${resource.getTotalMemory()} + '* 100%)'"
-                                     th:aria-valuenow="${resource.getUsedMemory()}"
-                                     th:aria-valuemax="${resource.getTotalMemory()}"
-                                     aria-valuemin="0"
-                                     th:text="${resource.getUsedMemory() / 1024} + ' GB'"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row vm">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">OpenStack VM Instance</h3>
-                        <div class="card-text">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col" width="350">ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Running Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="i, obj: ${instance}">
-                                    <td>
-                                        <a th:href="@{/vm/detail(id=${i.id})}" th:text="${i.id}"></a>
-                                    </td>
-                                    <td>
-                                        <a th:href="@{/vm/detail(id=${i.id})}" th:text="${i.name}"></a>
-                                    </td>
-                                    <td>
-                                        <div th:text="${i.status}" class="btn btn-sm instanceStatus"></div>
-                                    </td>
-                                    <td>
-                                        <canvas th:id="'vmRunningChart_' + ${obj.index}" class="vmRunningChart" height="30"></canvas>
+                                        <div class="btn btn-sm configStatus" th:text="${ns.configStatus}"></div>
+                                        <div class="btn btn-sm nsStatus" th:data-idx="${obj.index}" th:text="${ns.nsState}" data-toggle="modal" data-target="#detailedStatus"></div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -167,66 +65,169 @@
                 </div>
             </div>
         </div>
-        <div class="row kube">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Kubernetes Container</h3>
-                        <div class="card-text">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">CPU Utilization(cores)</th>
-                                    <th scope="col">Memory Utilization</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!--                                <tr>-->
-                                <!--                                    <td>-->
-                                <!--                                        <a href="/ns/detail?id=153215388525">153215388525</a>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td>-->
-                                <!--                                        <a href="/ns/detail?id=153215388525">cirros_2vnf_ns</a>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td>-->
-                                <!--                                        <div class="btn btn-sm btn-success">Running</div>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td>-->
-                                <!--                                    </td>-->
-                                <!--                                </tr>-->
-                                <!--                                <tr>-->
-                                <!--                                    <td>153215388525</td>-->
-                                <!--                                    <td>cirros_2vnf_ns</td>-->
-                                <!--                                    <td>-->
-                                <!--                                        <div class="btn btn-sm btn-success">Running</div>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td>-->
-                                <!--                                    </td>-->
-                                <!--                                </tr>-->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="row usage">-->
+<!--            <div class="col-sm-4">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="cardHeader">-->
+<!--                            <h3 class="card-title">VCPU Usage</h3>-->
+<!--                            <a href="#" class="btn btn-sm btn-primary">Detail</a>-->
+<!--                        </div>-->
+<!--                        <div class="card-text">-->
+<!--                            <div class="progress" style="height: 15px;">-->
+<!--                                <div class="progress-bar"-->
+<!--                                     role="progressbar"-->
+<!--                                     th:style="'width: calc(' + ${resource.getUsedVCPU()} + '/' + ${resource.getTotalVCPU()} + '* 100%)'"-->
+<!--                                     th:aria-valuenow="${resource.getUsedVCPU()}"-->
+<!--                                     th:aria-valuemax="${resource.getTotalVCPU()}"-->
+<!--                                     aria-valuemin="0"-->
+<!--                                     th:text="${resource.getUsedVCPU()} + ' cores'"></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-sm-4">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="cardHeader">-->
+<!--                            <h3 class="card-title">Disk Usage</h3>-->
+<!--                            <a href="#" class="btn btn-sm btn-primary">Detail</a>-->
+<!--                        </div>-->
+<!--                        <div class="card-text">-->
+<!--                            <div class="progress" style="height: 15px;">-->
+<!--                                <div class="progress-bar"-->
+<!--                                     role="progressbar"-->
+<!--                                     th:style="'width: calc(' + ${resource.getUsedDisk()} + '/' + ${resource.getTotalDisk()} + '* 100%)'"-->
+<!--                                     th:aria-valuenow="${resource.getUsedDisk()}"-->
+<!--                                     th:aria-valuemax="${resource.getTotalDisk()}"-->
+<!--                                     aria-valuemin="0"-->
+<!--                                     th:text="${resource.getUsedDisk()} + ' GB'"></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-sm-4">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="cardHeader">-->
+<!--                            <h3 class="card-title">Memory Usage</h3>-->
+<!--                            <a href="#" class="btn btn-sm btn-primary">Detail</a>-->
+<!--                        </div>-->
+<!--                        <div class="card-text">-->
+<!--                            <div class="progress" style="height: 15px;">-->
+<!--                                <div class="progress-bar"-->
+<!--                                     role="progressbar"-->
+<!--                                     th:style="'width: calc(' + ${resource.getUsedMemory()} + '/' + ${resource.getTotalMemory()} + '* 100%)'"-->
+<!--                                     th:aria-valuenow="${resource.getUsedMemory()}"-->
+<!--                                     th:aria-valuemax="${resource.getTotalMemory()}"-->
+<!--                                     aria-valuemin="0"-->
+<!--                                     th:text="${resource.getUsedMemory() / 1024} + ' GB'"></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row vm">-->
+<!--            <div class="col-lg-12">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-body">-->
+<!--                        <h3 class="card-title">OpenStack VM Instance</h3>-->
+<!--                        <div class="card-text">-->
+<!--                            <table class="table">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th scope="col" width="350">ID</th>-->
+<!--                                    <th scope="col">Name</th>-->
+<!--                                    <th scope="col">Status</th>-->
+<!--                                    <th scope="col">Running Status</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                <tr th:each="i, obj: ${instance}">-->
+<!--                                    <td>-->
+<!--                                        <a th:href="@{/vm/detail(id=${i.id})}" th:text="${i.id}"></a>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <a th:href="@{/vm/detail(id=${i.id})}" th:text="${i.name}"></a>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <div th:text="${i.status}" class="btn btn-sm instanceStatus"></div>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <canvas th:id="'vmRunningChart_' + ${obj.index}" class="vmRunningChart" height="30"></canvas>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row kube">-->
+<!--            <div class="col-lg-12">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-body">-->
+<!--                        <h3 class="card-title">Kubernetes Container</h3>-->
+<!--                        <div class="card-text">-->
+<!--                            <table class="table">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th scope="col">ID</th>-->
+<!--                                    <th scope="col">Name</th>-->
+<!--                                    <th scope="col">Status</th>-->
+<!--                                    <th scope="col">CPU Utilization(cores)</th>-->
+<!--                                    <th scope="col">Memory Utilization</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                &lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                        <a href="/ns/detail?id=153215388525">153215388525</a>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                        <a href="/ns/detail?id=153215388525">cirros_2vnf_ns</a>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                        <div class="btn btn-sm btn-success">Running</div>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>153215388525</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>cirros_2vnf_ns</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                        <div class="btn btn-sm btn-success">Running</div>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </section>
 </div>
 
 <script th:inline="javascript">
     $(function() {
-        var ns = [[${ns}]];
+        var NSs = [[${NSs}]];
+        console.log(NSs);
 
         $("body").on("click", ".nsStatus", function() {
             var idx = parseInt($(this).attr("data-idx"));
-            $("#detailedStatus .modal-body").html(ns[idx].detailedStatus);
+            $("#detailedStatus .modal-body").html(NSs[idx].detailedStatus);
         });
 
         $(".row.ns table tbody tr").each(function(e, el) {
@@ -254,64 +255,64 @@
                 $(nsStatus).addClass("btn-dark");
         });
 
-        $(".row.vm table tbody tr").each(function(e, el) {
-            var status = $(el).find(".instanceStatus");
-
-            if($(status).text().trim() == "ACTIVE")
-                $(status).addClass("btn-success");
-            else if($(status).text().trim() == "ERROR")
-                $(status).addClass("btn-danger");
-            else if($(status).text().trim() == "SHUTOFF")
-                $(status).addClass("btn-dark");
-        });
-
-
-        var dataSet = [[${instance}]];
-        $(".vmRunningChart").each(function(e, el) {
-            var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
-            // var data = dataSet[e];
-            // console.log(data);
-            var myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    datasets: [{
-                        data: dataSet[e].vmStatusData,
-                        backgroundColor: "rgba(0, 123, 255, 0.1)",
-                        borderColor: "rgba(0, 123, 255, 1)",
-                        borderWidth: 1,
-                        lineTension: 0,
-                        pointRadius: 0
-                    }]
-                },
-                options: {
-                    responsive: false,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: false,
-                            gridLines: {
-                                display: false
-                            }
-                        }],
-                        yAxes: [{
-                            display: false,
-                            gridLines: {
-                                display: false
-                            },
-                            ticks: {
-                                beginAtZero: true,
-                                max: 2,
-                                stepValue: 1,
-                                steps: 2
-                            }
-                        }]
-                    }
-                }
-            });
-        });
+        // $(".row.vm table tbody tr").each(function(e, el) {
+        //     var status = $(el).find(".instanceStatus");
+        //
+        //     if($(status).text().trim() == "ACTIVE")
+        //         $(status).addClass("btn-success");
+        //     else if($(status).text().trim() == "ERROR")
+        //         $(status).addClass("btn-danger");
+        //     else if($(status).text().trim() == "SHUTOFF")
+        //         $(status).addClass("btn-dark");
+        // });
+        //
+        //
+        // var dataSet = [[${instance}]];
+        // $(".vmRunningChart").each(function(e, el) {
+        //     var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
+        //     // var data = dataSet[e];
+        //     // console.log(data);
+        //     var myLineChart = new Chart(ctx, {
+        //         type: 'line',
+        //         data: {
+        //             labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        //             datasets: [{
+        //                 data: dataSet[e].vmStatusData,
+        //                 backgroundColor: "rgba(0, 123, 255, 0.1)",
+        //                 borderColor: "rgba(0, 123, 255, 1)",
+        //                 borderWidth: 1,
+        //                 lineTension: 0,
+        //                 pointRadius: 0
+        //             }]
+        //         },
+        //         options: {
+        //             responsive: false,
+        //             legend: {
+        //                 display: false
+        //             },
+        //             scales: {
+        //                 xAxes: [{
+        //                     display: false,
+        //                     gridLines: {
+        //                         display: false
+        //                     }
+        //                 }],
+        //                 yAxes: [{
+        //                     display: false,
+        //                     gridLines: {
+        //                         display: false
+        //                     },
+        //                     ticks: {
+        //                         beginAtZero: true,
+        //                         max: 2,
+        //                         stepValue: 1,
+        //                         steps: 2
+        //                     }
+        //                 }]
+        //             }
+        //         }
+        //     });
+        // });
     });
 </script>
 </body>

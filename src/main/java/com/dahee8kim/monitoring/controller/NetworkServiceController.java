@@ -17,7 +17,7 @@ public class NetworkServiceController {
         OSMTokenController osmTokenController = new OSMTokenController();
         NSController nsController = new NSController();
         nsController.setToken(osmTokenController.getToken());
-        ArrayList<NS> nsList = nsController.getNS();
+        ArrayList<NS> nsList = nsController.getNSs();
 
         model.addAttribute("NSs", nsList);
         return "ns/index";
