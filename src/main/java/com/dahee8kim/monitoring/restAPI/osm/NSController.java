@@ -37,17 +37,15 @@ public class NSController {
             ns.setDetailedStatus(jsonData.get("detailed-status").toString());
 
             // get vim net id
-            JSONObject deploy = (JSONObject) parser.parse(jsonData.get("deploymentStatus").toString());
-            JSONArray nets = (JSONArray) parser.parse(deploy.get("nets").toString());
-            JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
+            JSONObject deploy = (JSONObject) jsonData.get("deploymentStatus");
+            JSONArray nets = (JSONArray) deploy.get("nets");
+            JSONObject net = (JSONObject) nets.get(0);
             ns.setVimNetId(net.get("vim_net_id").toString());
 
             JSONArray vnfrRefs = (JSONArray) parser.parse(jsonData.get("constituent-vnfr-ref").toString());
             JSONArray vnfs = (JSONArray) parser.parse(deploy.get("vnfs").toString());
             vnfrRefs.forEach(vnfrRef -> ns.addVnfIds(vnfrRef.toString()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         return ns;
     }
@@ -71,9 +69,7 @@ public class NSController {
             for (int i = 0; i < ns.size(); i++) {
                 nsArray.add(parseNS(ns.get(i).toString()));
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         return nsArray;
     }

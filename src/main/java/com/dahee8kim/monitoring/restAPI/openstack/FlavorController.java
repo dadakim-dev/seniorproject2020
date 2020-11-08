@@ -17,6 +17,8 @@ public class FlavorController {
 
     public Flavor getFlavor(String flavorId) {
         Flavor flavor = new Flavor();
+        if(flavorId == null) return flavor;
+
         String url = "http://3.35.26.6:8774/v2.1/flavors/" + flavorId;
 
         HttpHeaders headers = new HttpHeaders();

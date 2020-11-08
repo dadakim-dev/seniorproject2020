@@ -93,6 +93,7 @@ public class VMInstanceController {
 
     public Instance getVMInstance(String id) {
         Instance instance = new Instance();
+        if(id == null) return instance;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -116,8 +117,7 @@ public class VMInstanceController {
             instance.setVmStatus(
                     vmStatusController.getVMStatus(instance.getId(), startTime, endTime, "30s")
             );
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
 
         return instance;

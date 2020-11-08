@@ -32,12 +32,11 @@ public class VNFController {
             vnf.setId(jsonData.get("id").toString());
 
             // set VIM ID (OpenStack VNF ID)
-            JSONArray vdurs = (JSONArray) jsonParser.parse(jsonData.get("vdur").toString());
-            JSONObject vdur = (JSONObject) jsonParser.parse(vdurs.get(0).toString());
+            JSONArray vdurs = (JSONArray) jsonData.get("vdur");
+            JSONObject vdur = (JSONObject) vdurs.get(0);
             vnf.setName(vdur.get("name").toString());
             vnf.setVimId(vdur.get("vim-id").toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
 
         return vnf;
@@ -63,8 +62,7 @@ public class VNFController {
             vnf.forEach(v -> {
                 VNFs.add(parseVNF(v.toString()));
             });
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
 
         return VNFs;

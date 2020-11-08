@@ -47,24 +47,32 @@ public class NetworkServiceController {
 
         // get all ns
         ArrayList<NS> NSs = nsController.getNSs();
-        // get all vnf
-        ArrayList<VNF> VNFs = vnfController.getVNFs();
+        ArrayList<VNF> VNFs = new ArrayList<>();
 
-        // set flavor to vnf
-        for (VNF vnf : VNFs) {
-            Instance instance = vmInstanceController.getVMInstance(vnf.getVimId());
-            vnf.setFlavor(flavorController.getFlavor(instance.getFlavorId()));
-            vnf.setVmStatus(instance.getVmStatus());
-        }
+        if(NSs.size() > 0) {
+            // get all vnf
+            VNFs = vnfController.getVNFs();
 
-        // matching ns and vnf
-        for (NS ns : NSs) {
-            ArrayList<String> vnfIds = ns.getVnfIds();
-            ns.setVNFs(
-                    (ArrayList<VNF>) VNFs.stream()
-                            .filter(vnf -> vnfIds.contains(vnf.getId()))
-                            .collect(Collectors.toList())
-            );
+            // set flavor to vnf
+            for (VNF vnf : VNFs) {
+                Instance instance = vmInstanceController.getVMInstance(vnf.getVimId());
+                vnf.setFlavor(flavorController.getFlavor(instance.getFlavorId()));
+                vnf.setVmStatus(instance.getVmStatus());
+            }
+
+            // matching ns and vnf
+            for (NS ns : NSs) {
+                ArrayList<String> vnfIds = ns.getVnfIds();
+                try {
+                    ns.setVNFs(
+                            (ArrayList<VNF>) VNFs.stream()
+                                    .filter(vnf -> vnfIds.contains(vnf.getId()))
+                                    .collect(Collectors.toList())
+                    );
+                } catch (NullPointerException e) {
+                    ns.setVNFs(VNFs);
+                }
+            }
         }
 
         // set attribute NS including VNF
