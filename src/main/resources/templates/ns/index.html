@@ -11,8 +11,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <style>
-    .table-light td {background: #f5f5f5; border-bottom: 1px solid #eee;}
-    .table-light th {border: 1px solid #eee !important; background: #eee !important;}
+    tbody, td, th {border: none !important;}
+    .NSs > thead th {border-bottom: 2px solid #eee !important;}
+    .NSs > tbody > tr:first-child td { border-bottom: 1px solid #eee !important;}
+    .VNFs > tbody > tr > td { border-bottom: 1px solid #eee !important; background: #f5f5f5 !important;}
+    td, th { font-size: 0.97em !important;}
 </style>
 <body>
 <div id="wrap">
@@ -24,99 +27,33 @@
                     <div class="card-body">
                         <h3 class="card-title">Network Service</h3>
                         <div class="card-text">
-                            <table class="table">
+                            <table class="table NSs">
                                 <thead>
                                 <tr>
-                                    <th scope="col" width="25%">ID</th>
-                                    <th scope="col" width="10%">Name</th>
+                                    <th scope="col" width="21%">ID</th>
+                                    <th scope="col" width="14%">Name</th>
                                     <th scope="col" width="30%">Description</th>
                                     <th scope="col" width="35%">Status</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                    <tr data-toggle="collapse" data-target="#accordian1">
-                                        <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                        <td>test</td>
-                                        <td>NS_ONOS</td>
+                                <tbody th:each="ns, obj: ${NSs}" >
+                                    <tr data-toggle="collapse" th:data-target="'#accordian' + ${obj.index}" data-target="#accordian2">
+                                        <td th:text="${ns.id}"></td>
+                                        <td th:text="${ns.name}"></td>
+                                        <td th:text="${ns.description}"></td>
                                         <td>
-                                            <div class="btn btn-sm btn-secondary">Init</div>
-                                            <div class="btn btn-sm btn-danger">NOT INSTANTIATED</div>
+                                            <div class="btn btn-sm configStatus" th:text="${ns.configStatus}"></div>
+                                            <div class="btn btn-sm nsStatus" th:text="${ns.nsState}"></div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" style="padding: 0;">
-                                            <div class="collapse" id="accordian1">
-                                                <table class="table table-light" style="margin: 0;">
+                                            <div class="collapse" th:id="'accordian' + ${obj.index}">
+                                                <table class="table table-light VNFs" style="margin: 0;">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col" width="25%" style="padding: 0;"></th>
-                                                            <th scope="col" width="10%" style="padding: 0;"></th>
-                                                            <th scope="col" width="30%" style="padding: 0;"></th>
-                                                            <th scope="col" width="35%" style="padding: 0;"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                                            <td>test</td>
-                                                            <td>
-                                                                <strong>VCPU</strong>: 1 Core&nbsp;&nbsp;&nbsp;
-                                                                <strong>Memory</strong>: 20 GB&nbsp;&nbsp;&nbsp;
-                                                                <strong>Disk</strong>: 20 GB
-                                                            </td>
-                                                            <td>
-                                                                <div class="btn btn-sm btn-secondary">Init</div>
-                                                                <div class="btn btn-sm btn-danger">NOT INSTANTIATED</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                                            <td>test</td>
-                                                            <td>
-                                                                <strong>VCPU</strong>: 1 Core&nbsp;&nbsp;&nbsp;
-                                                                <strong>Memory</strong>: 2 GB&nbsp;&nbsp;&nbsp;
-                                                                <strong>Disk</strong>: 20 GB
-                                                            </td>
-                                                            <td>
-                                                                <div class="btn btn-sm btn-secondary">Init</div>
-                                                                <div class="btn btn-sm btn-danger">NOT INSTANTIATED</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                                            <td>test</td>
-                                                            <td>
-                                                                <strong>VCPU</strong>: 1 Core&nbsp;&nbsp;&nbsp;
-                                                                <strong>Memory</strong>: 2 GB&nbsp;&nbsp;&nbsp;
-                                                                <strong>Disk</strong>: 20 GB
-                                                            </td>
-                                                            <td>
-                                                                <div class="btn btn-sm btn-secondary">Init</div>
-                                                                <div class="btn btn-sm btn-danger">NOT INSTANTIATED</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr data-toggle="collapse" data-target="#accordian2">
-                                        <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                        <td>test</td>
-                                        <td>SAMPLE DESCRIPTION</td>
-                                        <td>
-                                            <div class="btn btn-sm btn-secondary">Init</div>
-                                            <div class="btn btn-sm btn-danger">NOT INSTANTIATED</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" style="padding: 0;">
-                                            <div class="collapse" id="accordian2">
-                                                <table class="table table-light" style="margin: 0;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col" width="25%" style="padding: 0;"></th>
-                                                            <th scope="col" width="10%" style="padding: 0;"></th>
+                                                            <th scope="col" width="21%" style="padding: 0;"></th>
+                                                            <th scope="col" width="14%" style="padding: 0;"></th>
                                                             <th scope="col" width="10%" style="padding: 0;"></th>
                                                             <th scope="col" width="10%" style="padding: 0;"></th>
                                                             <th scope="col" width="10%" style="padding: 0;"></th>
@@ -124,34 +61,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                                            <td>test</td>
-                                                            <td><strong>VCPU</strong>: 1 Core</td>
-                                                            <td><strong>Disk</strong>: 20 GB</td>
-                                                            <td><strong>Memory</strong>: 2 GB</td>
+                                                        <tr th:each="vnf, vnfObj: ${ns.VNFs}">
+                                                            <td th:text="${vnf.id}"></td>
+                                                            <td th:text="${vnf.name}"></td>
+                                                            <td><strong>VCPU</strong>: <span th:text="${vnf.flavor.vcpu}"></span> Core</td>
+                                                            <td><strong>Disk</strong>: <span th:text="${vnf.flavor.disk}"></span> GB</td>
+                                                            <td><strong>Memory</strong>: <span th:text="${vnf.flavor.memory}"></span> MB</td>
                                                             <td>
-                                                                <canvas class="vmRunningChart" id="vmRunningChart_0" height="30"></canvas>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                                            <td>test</td>
-                                                            <td><strong>VCPU</strong>: 1 Core</td>
-                                                            <td><strong>Disk</strong>: 20 GB</td>
-                                                            <td><strong>Memory</strong>: 2 GB</td>
-                                                            <td>
-                                                                <canvas class="vmRunningChart" id="vmRunningChart_1" height="30"></canvas>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>70a8c970-4b2a-49ba-a7f0-b436bac91cc7</td>
-                                                            <td>test</td>
-                                                            <td><strong>VCPU</strong>: 1 Core</td>
-                                                            <td><strong>Disk</strong>: 20 GB</td>
-                                                            <td><strong>Memory</strong>: 2 GB</td>
-                                                            <td>
-                                                                <canvas class="vmRunningChart" id="vmRunningChart_2" height="30"></canvas>
+                                                                <canvas class="vmRunningChart" th:id="'vmRunningChart_' + ${obj.index} + '_' + ${vnfObj.index}" height="30"></canvas>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -169,18 +86,19 @@
     </section>
 </div>
 
-<script>
-    $(function() {
-        $(".vmRunningChart").each(function(e, el) {
-            var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
-            // var data = dataSet[e];
-            // console.log(data);
+<script src="/js/index.js"></script>
+<script th:inline="javascript">
+$(function() {
+    var NSs = [[${NSs}]];
+    $(NSs).each(function(nsIndex, ns) {
+        $(ns.vnfs).each(function(vnfIndex, vnf) {
+            var ctx = document.getElementById("vmRunningChart_" + nsIndex + "_" + vnfIndex).getContext("2d");
             var myLineChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                     datasets: [{
-                        data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        data: vnf.vmStatus,
                         backgroundColor: "rgba(0, 123, 255, 0.1)",
                         borderColor: "rgba(0, 123, 255, 1)",
                         borderWidth: 1,
@@ -217,6 +135,7 @@
             });
         });
     });
+});
 </script>
 </body>
 </html>

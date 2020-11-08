@@ -219,6 +219,7 @@
     </section>
 </div>
 
+<script src="/js/index.js"></script>
 <script th:inline="javascript">
     $(function() {
         var NSs = [[${NSs}]];
@@ -229,31 +230,6 @@
         $("body").on("click", ".nsStatus", function() {
             var idx = parseInt($(this).attr("data-idx"));
             $("#detailedStatus .modal-body").html(NSs[idx].detailedStatus);
-        });
-
-        $(".row.ns table tbody tr").each(function(e, el) {
-            var configStatus = $(el).find(".configStatus");
-            var nsStatus = $(el).find(".nsStatus");
-
-            if($(configStatus).text().trim() == "configured") {
-                $(configStatus).addClass("btn-success");
-                $(configStatus).text("Configured");
-            } else if($(configStatus).text().trim() == "init") {
-                $(configStatus).addClass("btn-secondary");
-                $(configStatus).text("Init");
-            } else if($(configStatus).text().trim() == "terminating") {
-                $(configStatus).addClass("btn-dark");
-                $(configStatus).text("Terminating");
-            }
-
-            if($(nsStatus).text().trim() == "READY")
-                $(nsStatus).addClass("btn-success");
-            else if($(nsStatus).text().trim() == "BROKEN")
-                $(nsStatus).addClass("btn-danger");
-            else if($(nsStatus).text().trim() == "BUILDING")
-                $(nsStatus).addClass("btn-secondary");
-            else if($(nsStatus).text().trim() == "TERMINATING")
-                $(nsStatus).addClass("btn-dark");
         });
 
         $(".row.vm table tbody tr").each(function(e, el) {
@@ -267,16 +243,14 @@
                 $(status).addClass("btn-dark");
         });
 
-        $(".vmRunningChart").each(function(e, el) {
-            var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
-            // var data = dataSet[e];
-            // console.log(data);
+        $(VMs).each(function(vmIndex, vm) {
+            var ctx = document.getElementById("vmRunningChart_" + vmIndex).getContext("2d");
             var myLineChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                     datasets: [{
-                        data: VMs[e].vmStatusData,
+                        data: vm.vmStatus,
                         backgroundColor: "rgba(0, 123, 255, 0.1)",
                         borderColor: "rgba(0, 123, 255, 1)",
                         borderWidth: 1,

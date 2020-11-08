@@ -1,7 +1,6 @@
 package com.dahee8kim.monitoring.restAPI.osm;
 
 import com.dahee8kim.monitoring.domain.osm.NS;
-import com.dahee8kim.monitoring.domain.osm.VNF;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
