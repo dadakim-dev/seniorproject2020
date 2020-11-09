@@ -11,20 +11,18 @@ import java.util.Collections;
 public class FlavorController {
     private String token;
 
-    public void setToken(String token) {
-        this.token = token;
+    public FlavorController(String token_) {
+        token = token_;
     }
 
     public Flavor getFlavor(String flavorId) {
         Flavor flavor = new Flavor();
-        if(flavorId == null) return flavor;
-
-        String url = "http://54.180.94.196:8774/v2.1/flavors/" + flavorId;
+        String url = "http://3.35.26.6:8774/v2.1/flavors/" + flavorId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.set("X-Auth-Token", this.token);
+        headers.setBearerAuth(token);
 
         HttpEntity<String> request = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
@@ -49,5 +47,9 @@ public class FlavorController {
         }
 
         return flavor;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

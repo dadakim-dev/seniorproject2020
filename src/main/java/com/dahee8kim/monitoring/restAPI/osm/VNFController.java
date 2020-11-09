@@ -32,11 +32,11 @@ public class VNFController {
             vnf.setId(jsonData.get("id").toString());
 
             // set VIM ID (OpenStack VNF ID)
-            JSONArray vdurs = (JSONArray) jsonData.get("vdur");
-            JSONObject vdur = (JSONObject) vdurs.get(0);
-            vnf.setName(vdur.get("name").toString());
+            JSONArray vdurs = (JSONArray) jsonParser.parse(jsonData.get("vdur").toString());
+            JSONObject vdur = (JSONObject) jsonParser.parse(vdurs.get(0).toString());
             vnf.setVimId(vdur.get("vim-id").toString());
-        } catch (Exception e) {
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         return vnf;
@@ -45,7 +45,7 @@ public class VNFController {
     public ArrayList<VNF> getVNFs() {
         ArrayList<VNF> VNFs = new ArrayList<>();
 
-        String url = "http://54.180.94.196:8888/osm/nslcm/v1/vnf_instances";
+        String url = "http://3.35.26.6:8888/osm/nslcm/v1/vnf_instances";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -62,14 +62,15 @@ public class VNFController {
             vnf.forEach(v -> {
                 VNFs.add(parseVNF(v.toString()));
             });
-        } catch (Exception e) {
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         return VNFs;
     }
 
     public VNF getVNF(String osmId) {
-        String url = "http://54.180.94.196:8888/osm/nslcm/v1/vnf_instances/" + osmId;
+        String url = "http://3.35.26.6:8888/osm/nslcm/v1/vnf_instances/" + osmId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
