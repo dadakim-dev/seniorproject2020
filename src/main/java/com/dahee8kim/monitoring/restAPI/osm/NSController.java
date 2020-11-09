@@ -1,7 +1,6 @@
 package com.dahee8kim.monitoring.restAPI.osm;
 
 import com.dahee8kim.monitoring.domain.osm.NS;
-import com.dahee8kim.monitoring.domain.osm.VNF;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,32 +29,30 @@ public class NSController {
 
             // get ns id
             ns.setId(jsonData.get("_id").toString());
-//            ns.setName(ns_.get("name").toString());
-//            ns.setDescription(ns_.get("description").toString());
-//            ns.setNsState(ns_.get("nsState").toString());
-//            ns.setOperationalStatus(ns_.get("operational-status").toString());
-//            ns.setConfigStatus(ns_.get("config-status").toString());
-//            ns.setDescription(ns_.get("detailed-status").toString());
+            ns.setName(jsonData.get("name").toString());
+            ns.setDescription(jsonData.get("description").toString());
+            ns.setNsState(jsonData.get("nsState").toString());
+            ns.setOperationalStatus(jsonData.get("operational-status").toString());
+            ns.setConfigStatus(jsonData.get("config-status").toString());
+            ns.setDetailedStatus(jsonData.get("detailed-status").toString());
 
             // get vim net id
-            JSONObject deploy = (JSONObject) parser.parse(jsonData.get("deploymentStatus").toString());
-            JSONArray nets = (JSONArray) parser.parse(deploy.get("nets").toString());
-            JSONObject net = (JSONObject) parser.parse(nets.get(0).toString());
+            JSONObject deploy = (JSONObject) jsonData.get("deploymentStatus");
+            JSONArray nets = (JSONArray) deploy.get("nets");
+            JSONObject net = (JSONObject) nets.get(0);
             ns.setVimNetId(net.get("vim_net_id").toString());
 
             JSONArray vnfrRefs = (JSONArray) parser.parse(jsonData.get("constituent-vnfr-ref").toString());
             JSONArray vnfs = (JSONArray) parser.parse(deploy.get("vnfs").toString());
             vnfrRefs.forEach(vnfrRef -> ns.addVnfIds(vnfrRef.toString()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         return ns;
     }
 
-    public ArrayList<NS> getNS() {
+    public ArrayList<NS> getNSs() {
         ArrayList<NS> nsArray = new ArrayList<NS>();
-        String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances";
+        String url = "http://54.180.94.196:8888/osm/nslcm/v1/ns_instances";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -72,9 +69,7 @@ public class NSController {
             for (int i = 0; i < ns.size(); i++) {
                 nsArray.add(parseNS(ns.get(i).toString()));
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         return nsArray;
     }
