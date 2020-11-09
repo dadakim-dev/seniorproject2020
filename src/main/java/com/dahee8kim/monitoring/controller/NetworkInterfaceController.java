@@ -58,23 +58,32 @@ public class NetworkInterfaceController {
         ArrayList<Router> routers = routerController.getRouters();
 
         // Mapping NS~VNF id list - VNF id
-        AtomicInteger nsIndex = new AtomicInteger();
         for (NS ns : NSs) {
             ArrayList<String> vnfIds = ns.getVnfIds();
-            ns.setVNFs(
-                (ArrayList<VNF>) VNFs.stream()
-                        .filter(vnf -> vnfIds.contains(vnf.getId()))
-                        .collect(Collectors.toList())
-            );
+            try {
+                ns.setVNFs(
+                        (ArrayList<VNF>) VNFs.stream()
+                                .filter(vnf -> vnfIds.contains(vnf.getId()))
+                                .collect(Collectors.toList())
+                );
+            } catch(NullPointerException e) {
+                ns.setVNFs(new ArrayList<>());
+            }
         }
 
         // Mapping Network id - VNF vim network id
         for (Network network : networks) {
-            network.setNSs((ArrayList<NS>) NSs.stream()
-                    .filter(ns ->
-                            ns.getVimNetId().equals(network.getId()))
-                    .collect(Collectors.toList())
-            );
+            ArrayList<NS> NSs_ = new ArrayList<>();
+            try {
+                network.setNSs((ArrayList<NS>) NSs.stream()
+                        .filter(ns ->
+                                ns.getVimNetId().equals(network.getId()))
+                        .collect(Collectors.toList())
+                );
+            } catch(NullPointerException e) {
+                network.setNSs(new ArrayList<>());
+            }
+
             network.setSubnets((ArrayList<Subnet>) subnets.stream()
                     .filter(subnet ->
                             subnet.getNetworkId().equals(network.getId()))

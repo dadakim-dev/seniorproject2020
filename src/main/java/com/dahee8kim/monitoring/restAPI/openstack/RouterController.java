@@ -21,22 +21,26 @@ public class RouterController {
     public Router parseRouter(JSONObject data) {
         Router router = new Router();
 
-        JSONObject externalGatewayInfo = (JSONObject) data.get("external_gateway_info");
-        JSONArray externalFixedIps_ = (JSONArray) externalGatewayInfo.get("external_fixed_ips");
-
         router.setId(data.get("id").toString());
         router.setTenantId(data.get("tenant_id").toString());
         router.setName(data.get("name").toString());
         router.setStatus(data.get("status").toString());
 
-        ArrayList<String> externalFixedIps = new ArrayList<>();
-        externalFixedIps_.forEach(externalFixedIp ->
-                externalFixedIps.add(
-                        ((JSONObject) externalFixedIp).get("ip_address").toString()
-                )
-        );
+        try {
+            JSONObject externalGatewayInfo = (JSONObject) data.get("external_gateway_info");
+            JSONArray externalFixedIps_ = (JSONArray) externalGatewayInfo.get("external_fixed_ips");
 
-        router.setExternalFixedIps(externalFixedIps);
+            ArrayList<String> externalFixedIps = new ArrayList<>();
+            externalFixedIps_.forEach(externalFixedIp ->
+                    externalFixedIps.add(
+                            ((JSONObject) externalFixedIp).get("ip_address").toString()
+                    )
+            );
+
+            router.setExternalFixedIps(externalFixedIps);
+        } catch(NullPointerException e) {
+            router.setExternalFixedIps(new ArrayList<String> ());
+        }
 
         return router;
     }
@@ -53,8 +57,6 @@ public class RouterController {
         HttpEntity<String> request = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-
-        System.out.println(response.getBody());
 
         try {
             JSONObject jsonData = (JSONObject) jsonParser.parse(response.getBody());
