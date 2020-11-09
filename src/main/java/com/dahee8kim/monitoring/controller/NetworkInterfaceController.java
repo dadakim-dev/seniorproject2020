@@ -1,11 +1,13 @@
 package com.dahee8kim.monitoring.controller;
 
+import com.dahee8kim.monitoring.domain.openstack.Router;
 import com.dahee8kim.monitoring.domain.openstack.Subnet;
 import com.dahee8kim.monitoring.domain.osm.NS;
 import com.dahee8kim.monitoring.domain.openstack.Network;
 import com.dahee8kim.monitoring.domain.osm.VNF;
 import com.dahee8kim.monitoring.restAPI.openstack.NetworkController;
 import com.dahee8kim.monitoring.restAPI.openstack.OpenStackTokenController;
+import com.dahee8kim.monitoring.restAPI.openstack.RouterController;
 import com.dahee8kim.monitoring.restAPI.openstack.SubnetController;
 import com.dahee8kim.monitoring.restAPI.osm.NSController;
 import com.dahee8kim.monitoring.restAPI.osm.OSMTokenController;
@@ -45,11 +47,15 @@ public class NetworkInterfaceController {
         SubnetController subnetController = new SubnetController();
         subnetController.setToken(openStackToken);
 
+        RouterController routerController = new RouterController();
+        routerController.setToken(openStackToken);
+      
         // Get NS list, VNF list, network list
         ArrayList<NS> NSs = nsController.getNSs();
         ArrayList<VNF> VNFs = vnfController.getVNFs();
         ArrayList<Network> networks = networkController.getNetworks();
         ArrayList<Subnet> subnets = subnetController.getSubnets();
+        ArrayList<Router> routers = routerController.getRouters();
 
         // Mapping NS~VNF id list - VNF id
         AtomicInteger nsIndex = new AtomicInteger();
@@ -77,6 +83,7 @@ public class NetworkInterfaceController {
 
         // export network list including NS, VNF to model
         model.addAttribute("networks", networks);
+        model.addAttribute("routers", routers);
 //        model.addAttribute("subnets", subnets);
 
         return "/network/index";
