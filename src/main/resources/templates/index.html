@@ -153,7 +153,7 @@
                                         <a th:href="@{/vm/detail(id=${vm.id})}" th:text="${vm.name}"></a>
                                     </td>
                                     <td>
-                                        <div th:text="${vm.status}" class="btn btn-sm instanceStatus"></div>
+                                        <div th:text="${vm.status}" class="btn btn-sm status"></div>
                                     </td>
                                     <td>
                                         <canvas th:id="'vmRunningChart_' + ${obj.index}" class="vmRunningChart" height="30"></canvas>
@@ -230,17 +230,6 @@
         $("body").on("click", ".nsStatus", function() {
             var idx = parseInt($(this).attr("data-idx"));
             $("#detailedStatus .modal-body").html(NSs[idx].detailedStatus);
-        });
-
-        $(".row.vm table tbody tr").each(function(e, el) {
-            var status = $(el).find(".instanceStatus");
-
-            if($(status).text().trim() == "ACTIVE")
-                $(status).addClass("btn-success");
-            else if($(status).text().trim() == "ERROR")
-                $(status).addClass("btn-danger");
-            else if($(status).text().trim() == "SHUTOFF")
-                $(status).addClass("btn-dark");
         });
 
         $(VMs).each(function(vmIndex, vm) {

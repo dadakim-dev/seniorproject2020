@@ -37,7 +37,7 @@
                                 </tr>
                                 </thead>
                                 <tbody th:each="ns, obj: ${NSs}" >
-                                    <tr data-toggle="collapse" th:data-target="'#accordian' + ${obj.index}" data-target="#accordian2">
+                                    <tr data-toggle="collapse" th:data-target="'#accordian' + ${obj.index}">
                                         <td th:text="${ns.id}"></td>
                                         <td th:text="${ns.name}"></td>
                                         <td th:text="${ns.description}"></td>

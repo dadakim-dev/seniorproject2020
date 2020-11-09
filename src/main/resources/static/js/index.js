@@ -21,4 +21,13 @@ $(function() {
         else if($(el).text().trim() == "TERMINATING")
             $(el).addClass("btn-dark");
     });
+
+    $(".status").each(function(e, el) {
+        if($(el).text().trim() == "ACTIVE")
+            $(el).addClass("btn-success");
+        else if($(el).text().trim() == "ERROR")
+            $(el).addClass("btn-danger");
+        else if($(el).text().trim() == "SHUTOFF")
+            $(el).addClass("btn-dark");
+    });
 });

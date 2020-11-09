@@ -2,7 +2,7 @@ package com.dahee8kim.monitoring.restAPI.openstack;
 
 import com.dahee8kim.monitoring.domain.openstack.NetworkInterface;
 import com.dahee8kim.monitoring.domain.openstack.Router;
-import com.dahee8kim.monitoring.domain.osm.Network;
+import com.dahee8kim.monitoring.domain.openstack.Network;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,6 +34,8 @@ public class NetworkController {
         try {
             JSONObject network_ = (JSONObject) jsonParser.parse(data);
             network.setId(network_.get("id").toString());
+            network.setName(network_.get("name").toString());
+            network.setStatus(network_.get("status").toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
