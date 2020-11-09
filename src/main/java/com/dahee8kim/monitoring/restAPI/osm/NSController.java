@@ -52,7 +52,7 @@ public class NSController {
 
     public ArrayList<NS> getNSs() {
         ArrayList<NS> nsArray = new ArrayList<NS>();
-        String url = "http://3.35.26.6:8888/osm/nslcm/v1/ns_instances";
+        String url = "http://54.180.94.196:8888/osm/nslcm/v1/ns_instances";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

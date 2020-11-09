@@ -17,7 +17,7 @@ public class VMStatusController {
 
     public ArrayList<String> getVMStatus(String id, String start, String end, String step) {
         ArrayList<String> VMStatus = new ArrayList<>();
-        String url = "http://3.35.26.6:9090/api/v1/query_range?query=osm_vm_status%7B" +
+        String url = "http://54.180.94.196:9090/api/v1/query_range?query=osm_vm_status%7B" +
                 "resource_uuid%3D%22" + id
                 + "%22%7D&start=" + start
                 + "&end=" + end

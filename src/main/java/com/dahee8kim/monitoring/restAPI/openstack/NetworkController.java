@@ -18,7 +18,7 @@ import java.util.Collections;
 public class NetworkController {
     private String token;
     private JSONParser jsonParser = new JSONParser();
-    private String url = "http://3.35.26.6:9696/v2.0/";
+    private String url = "http://54.180.94.196:9696/v2.0/";
 
     public String getToken() {
         return token;
