@@ -10,17 +10,94 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
+<style>
+tbody, td, th {border: none !important;}
+.networks > thead th {border-bottom: 2px solid #eee !important;}
+.networks > tbody > tr:first-child td { border-bottom: 1px solid #eee !important;}
+.subnets > tbody > tr > td { border-bottom: 1px solid #eee !important; background: #f5f5f5 !important;}
+td, th { font-size: 0.97em !important;}
+</style>
 <body>
 <div id="wrap">
     <th:block th:replace="fragment/left"></th:block>
     <section id="right">
-
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Networks</h3>
+                        <div class="card-text">
+                            <table class="table networks">
+                                <thead>
+                                    <tr>
+                                        <th width="20%">ID</th>
+                                        <th width="20%">Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody th:each="network, obj: ${networks}">
+                                    <tr data-toggle="collapse" th:data-target="'#accordian' + ${obj.index}">
+                                        <td th:text="${network.id}"></td>
+                                        <td th:text="${network.name}"></td>
+                                        <td>
+                                            <div th:text="${network.status}" class="btn btn-sm status"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="padding: 0;">
+                                            <div class="collapse" th:id="'accordian' + ${obj.index}">
+                                                <table class="table table-light subnets" style="margin:0;">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="20%" style="padding:0;"></th>
+                                                        <th width="20%" style="padding:0;"></th>
+                                                        <th style="padding:0;"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="subnet, subnetObj: ${network.subnets}">
+                                                        <td th:text="${subnet.id}"></td>
+                                                        <td th:text="${subnet.name}"></td>
+                                                        <td>
+                                                            <span th:text="${subnet.gatewayIP}"></span>
+                                                            <span th:text="'('+${subnet.cidr}+')'"></span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+<!--                                    <tr th:each="subnet, subnetObj: ${network.subnets}">-->
+<!--                                        <td th:text="${subnet.id}"></td>-->
+<!--                                        <td th:text="${subnet.name}"></td>-->
+<!--                                        <td></td>-->
+<!--                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row topology">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Network Topology</h3>
+                        <div class="card-text">
+                            <canvas id="networkTopology" width="1595" height="500" style="border: 1px solid black;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
+<script src="/js/index.js"></script>
 <script th:inline="javascript">
 $(function() {
-    var networkList = [[${networkLists}]];
-    console.log(networkList);
+    console.log([[${networks}]]);
 });
 </script>
 </body>

@@ -25,7 +25,6 @@
         </div>
     </div>
 </div>
-
 <div id="wrap">
     <th:block th:replace="fragment/left"></th:block>
     <section id="right">
@@ -45,17 +44,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="n, obj: ${ns}">
+                                <tr th:each="ns, obj: ${NSs}">
                                     <td>
-                                        <a th:href="@{/ns/detail(id=${n.getId()})}" th:text="${n.getId()}"></a>
+                                        <a th:href="@{/ns/detail(id=${ns.id})}" th:text="${ns.id}"></a>
                                     </td>
                                     <td>
-                                        <a th:href="@{/ns/detail(id=${n.getId()})}" th:text="${n.getName()}"></a>
+                                        <a th:href="@{/ns/detail(id=${ns.id})}" th:text="${ns.name}"></a>
                                     </td>
-                                    <td th:text="${n.getDescription()}"></td>
+                                    <td th:text="${ns.description}"></td>
                                     <td>
-                                        <div class="btn btn-sm configStatus" th:text="${n.getConfigStatus()}"></div>
-                                        <div class="btn btn-sm nsStatus" th:data-idx="${obj.index}" th:text="${n.getNsState()}" data-toggle="modal" data-target="#detailedStatus"></div>
+                                        <div class="btn btn-sm configStatus" th:text="${ns.configStatus}"></div>
+                                        <div class="btn btn-sm nsStatus" th:data-idx="${obj.index}" th:text="${ns.nsState}" data-toggle="modal" data-target="#detailedStatus"></div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -77,11 +76,11 @@
                             <div class="progress" style="height: 15px;">
                                 <div class="progress-bar"
                                      role="progressbar"
-                                     th:style="'width: calc(' + ${resource.getUsedVCPU()} + '/' + ${resource.getTotalVCPU()} + '* 100%)'"
-                                     th:aria-valuenow="${resource.getUsedVCPU()}"
-                                     th:aria-valuemax="${resource.getTotalVCPU()}"
+                                     th:style="'width: calc(' + ${resource.usedVCPU} + '/' + ${resource.totalVCPU} + '* 100%)'"
+                                     th:aria-valuenow="${resource.usedVCPU}"
+                                     th:aria-valuemax="${resource.totalVCPU}"
                                      aria-valuemin="0"
-                                     th:text="${resource.getUsedVCPU()} + ' cores'"></div>
+                                     th:text="${resource.usedVCPU} + ' cores'"></div>
                             </div>
                         </div>
                     </div>
@@ -98,11 +97,11 @@
                             <div class="progress" style="height: 15px;">
                                 <div class="progress-bar"
                                      role="progressbar"
-                                     th:style="'width: calc(' + ${resource.getUsedDisk()} + '/' + ${resource.getTotalDisk()} + '* 100%)'"
-                                     th:aria-valuenow="${resource.getUsedDisk()}"
-                                     th:aria-valuemax="${resource.getTotalDisk()}"
+                                     th:style="'width: calc(' + ${resource.usedDisk} + '/' + ${resource.totalDisk} + '* 100%)'"
+                                     th:aria-valuenow="${resource.usedDisk}"
+                                     th:aria-valuemax="${resource.totalDisk}"
                                      aria-valuemin="0"
-                                     th:text="${resource.getUsedDisk()} + ' GB'"></div>
+                                     th:text="${resource.usedDisk} + ' GB'"></div>
                             </div>
                         </div>
                     </div>
@@ -119,11 +118,11 @@
                             <div class="progress" style="height: 15px;">
                                 <div class="progress-bar"
                                      role="progressbar"
-                                     th:style="'width: calc(' + ${resource.getUsedMemory()} + '/' + ${resource.getTotalMemory()} + '* 100%)'"
-                                     th:aria-valuenow="${resource.getUsedMemory()}"
-                                     th:aria-valuemax="${resource.getTotalMemory()}"
+                                     th:style="'width: calc(' + ${resource.usedMemory} + '/' + ${resource.totalMemory} + '* 100%)'"
+                                     th:aria-valuenow="${resource.usedMemory}"
+                                     th:aria-valuemax="${resource.totalMemory}"
                                      aria-valuemin="0"
-                                     th:text="${resource.getUsedMemory() / 1024} + ' GB'"></div>
+                                     th:text="${resource.usedMemory / 1024} + ' GB'"></div>
                             </div>
                         </div>
                     </div>
@@ -146,15 +145,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="i, obj: ${instance}">
+                                <tr th:each="vm, obj: ${VMs}">
                                     <td>
-                                        <a th:href="@{/vm/detail(id=${i.id})}" th:text="${i.id}"></a>
+                                        <a th:href="@{/vm/detail(id=${vm.id})}" th:text="${vm.id}"></a>
                                     </td>
                                     <td>
-                                        <a th:href="@{/vm/detail(id=${i.id})}" th:text="${i.name}"></a>
+                                        <a th:href="@{/vm/detail(id=${vm.id})}" th:text="${vm.name}"></a>
                                     </td>
                                     <td>
-                                        <div th:text="${i.status}" class="btn btn-sm instanceStatus"></div>
+                                        <div th:text="${vm.status}" class="btn btn-sm status"></div>
                                     </td>
                                     <td>
                                         <canvas th:id="'vmRunningChart_' + ${obj.index}" class="vmRunningChart" height="30"></canvas>
@@ -220,63 +219,27 @@
     </section>
 </div>
 
+<script src="/js/index.js"></script>
 <script th:inline="javascript">
     $(function() {
-        var ns = [[${ns}]];
+        var NSs = [[${NSs}]];
+        var resource = [[${resource}]];
+        var VMs = [[${VMs}]];
+        console.log(VMs);
 
         $("body").on("click", ".nsStatus", function() {
             var idx = parseInt($(this).attr("data-idx"));
-            $("#detailedStatus .modal-body").html(ns[idx].detailedStatus);
+            $("#detailedStatus .modal-body").html(NSs[idx].detailedStatus);
         });
 
-        $(".row.ns table tbody tr").each(function(e, el) {
-            var configStatus = $(el).find(".configStatus");
-            var nsStatus = $(el).find(".nsStatus");
-
-            if($(configStatus).text().trim() == "configured") {
-                $(configStatus).addClass("btn-success");
-                $(configStatus).text("Configured");
-            } else if($(configStatus).text().trim() == "init") {
-                $(configStatus).addClass("btn-secondary");
-                $(configStatus).text("Init");
-            } else if($(configStatus).text().trim() == "terminating") {
-                $(configStatus).addClass("btn-dark");
-                $(configStatus).text("Terminating");
-            }
-
-            if($(nsStatus).text().trim() == "READY")
-                $(nsStatus).addClass("btn-success");
-            else if($(nsStatus).text().trim() == "BROKEN")
-                $(nsStatus).addClass("btn-danger");
-            else if($(nsStatus).text().trim() == "BUILDING")
-                $(nsStatus).addClass("btn-secondary");
-            else if($(nsStatus).text().trim() == "TERMINATING")
-                $(nsStatus).addClass("btn-dark");
-        });
-
-        $(".row.vm table tbody tr").each(function(e, el) {
-            var status = $(el).find(".instanceStatus");
-
-            if($(status).text().trim() == "ACTIVE")
-                $(status).addClass("btn-success");
-            else if($(status).text().trim() == "ERROR")
-                $(status).addClass("btn-danger");
-            else if($(status).text().trim() == "SHUTOFF")
-                $(status).addClass("btn-dark");
-        });
-
-
-        var dataSet = [[${instance}]];
-        $(".vmRunningChart").each(function(e, el) {
-            var ctx = document.getElementById("vmRunningChart_" + e).getContext("2d");
-            // var data = dataSet[e];
-            // console.log(data);
+        $(VMs).each(function(vmIndex, vm) {
+            var ctx = document.getElementById("vmRunningChart_" + vmIndex).getContext("2d");
             var myLineChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                     datasets: [{
-                        data: dataSet[e].vmStatusData,
+                        data: vm.vmStatus,
                         backgroundColor: "rgba(0, 123, 255, 0.1)",
                         borderColor: "rgba(0, 123, 255, 1)",
                         borderWidth: 1,
