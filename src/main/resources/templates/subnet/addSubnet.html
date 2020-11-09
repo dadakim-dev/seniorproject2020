@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFV/VNF Monitoring</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form action="/subnet" method="get">
+        <input type="text" id="subnet-name" name="subnet-name" required
+               minlength="1" size="50" placeholder="subnet-name">
+        <input type="text" id="network-id" name="network-id" required
+               minlength="1" size="50" placeholder="network-id">
+        <select name="ip-version" id="ip-version">
+            <option value="4">ipv4</option>
+            <option value="6">ipv6</option>
+        </select>
+        <input type="text" id="cidr" name="cidr" required
+               minlength="1" size="50" placeholder="cidr">
+        <input type="text" id="start-pool" name="start-pool" required
+               minlength="1" size="50" placeholder="start-pool">
+        <input type="text" id="end-pool" name="end-pool" required
+               minlength="1" size="50" placeholder="end-pool">
+        <input type="submit" value="create subnets">
+    </form>
+</body>
+</html>

@@ -27,17 +27,25 @@ public class Instance {
         this.status = status;
     }
 
-    public ArrayList<String> getVmStatusData() {
-        return vmStatusData;
+    public ArrayList<String> getVmStatus() {
+        return vmStatus;
     }
 
-    public void setVmStatusData(ArrayList<String> vmStatusData) {
-        this.vmStatusData = vmStatusData;
+    public void setVmStatus(ArrayList<String> vmStatusData) {
+        this.vmStatus = vmStatusData;
+    }
+
+    public String getFlavorId() {
+        return flavorId;
+    }
+
+    public void setFlavorId(String flavorId) {
+        this.flavorId = flavorId;
     }
 
     private String id;
     private String name;
     private String status;
-
-    private ArrayList<String> vmStatusData = new ArrayList<>();
+    private String flavorId;
+    private ArrayList<String> vmStatus;
 }
