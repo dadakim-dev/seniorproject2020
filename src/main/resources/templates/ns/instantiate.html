@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFV/VNF Monitoring</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<style>
+    tbody, td, th {border: none !important;}
+    .table:not(.table-light) > thead th {border-bottom: 2px solid #eee !important;}
+    .table:not(.table-light) > tbody > tr:first-child td { border-bottom: 1px solid #eee !important;}
+    .table-light > tbody > tr > td { border-bottom: 1px solid #eee !important; background: #f5f5f5 !important;}
+    td, th { font-size: 0.97em !important;}
+</style>
+<body>
+<div id="wrap">
+    <th:block th:replace="fragment/left"></th:block>
+    <section id="right">
+        <div class="row vim">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">VIM lists</h3>
+                        <div class="card-text">
+                            <table class="table VIMs">
+                                <thead>
+                                <tr>
+                                    <th scope="col" width="40%">ID</th>
+                                    <th scope="col" width="20%">Name</th>
+                                    <th scope="col" width="40%">VIM Type</th>
+                                </tr>
+                                </thead>
+                                <tbody th:each="vim, obj: ${VIMs}" >
+                                <tr>
+                                    <td th:text="${vim.id}"></td>
+                                    <td th:text="${vim.name}"></td>
+                                    <td th:text="${vim.vim_type}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row nsd">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">NSD lists</h3>
+                        <div class="card-text">
+                            <table class="table NSDs">
+                                <thead>
+                                <tr>
+                                    <th scope="col" width="40%">ID</th>
+                                    <th scope="col" width="20%">Name</th>
+                                    <th scope="col" width="40%">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody th:each="nsd, obj: ${NSDs}" >
+                                <tr>
+                                    <td th:text="${nsd.id}"></td>
+                                    <td th:text="${nsd.name}"></td>
+                                    <td th:text="${nsd.description}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ns instantiate">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">NS Instantiate</h3>
+                        <div class="card-text">
+                            <form action="/instantiating" method="get">
+                                <div class="form-group">
+                                    <label for="ns-name" width="30%">NSDescriptor Name (1 to 40 characters):</label>
+                                    <input type="text" class="form-control" id="ns-name" name="ns-name" required
+                                           minlength="1" maxlength="40" width="90%" placeholder="ns-name"></div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="vim-account" width="30%">VIM account select:</label>
+                                        <select name="vim-account" class="form-control" id="vim-account">
+                                            <option th:each="vim : ${VIMs}" th:value="${vim.id}"
+                                                    th:text="${vim.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="nsd" width="30%">NS Descriptor select:</label>
+                                        <select name="nsd" id="nsd" class="form-control">
+                                            <option th:each="nsd : ${NSDs}" th:value="${nsd.id}"
+                                                    th:text="${nsd.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button th:type="submit" class="btn btn-sm btn-primary">INSTANTIATE</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="/js/index.js"></script>
+</body>
+</html>

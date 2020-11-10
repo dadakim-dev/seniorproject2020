@@ -33,21 +33,27 @@
                                     <th scope="col" width="21%">ID</th>
                                     <th scope="col" width="14%">Name</th>
                                     <th scope="col" width="30%">Description</th>
-                                    <th scope="col" width="35%">Status</th>
+                                    <th scope="col" width="25%">Status</th>
+                                    <th scope="col" width="10%">Deletion</th>
                                 </tr>
                                 </thead>
                                 <tbody th:each="ns, obj: ${NSs}" >
                                     <tr data-toggle="collapse" th:data-target="'#accordian' + ${obj.index}">
                                         <td th:text="${ns.id}"></td>
                                         <td th:text="${ns.name}"></td>
-                                        <td th:text="${ns.description}"></td>
+                                        <td th:cols="3" th:text="${ns.description}"></td>
                                         <td>
-                                            <div class="btn btn-sm configStatus" th:text="${ns.configStatus}"></div>
-                                            <div class="btn btn-sm nsStatus" th:text="${ns.nsState}"></div>
+                                            <div class="btn btn-sm configStatus" th:text="${ns.configStatus}" th:value="${ns.configStatus}"></div>
+                                            <div class="btn btn-sm nsStatus" th:text="${ns.nsState}" th:value="${ns.nsState}"></div>
                                         </td>
+                                        <form action="/deleting" method="get">
+                                            <td>
+                                                <button name="ns-id" class="btn btn-sm btn-outline-danger deleteNS" th:text="delete" th:value="${ns.id}"></button>
+                                            </td>
+                                        </form>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" style="padding: 0;">
+                                        <td colspan="5" style="padding: 0;">
                                             <div class="collapse" th:id="'accordian' + ${obj.index}">
                                                 <table class="table table-light VNFs" style="margin: 0;">
                                                     <thead>
@@ -57,7 +63,7 @@
                                                             <th scope="col" width="10%" style="padding: 0;"></th>
                                                             <th scope="col" width="10%" style="padding: 0;"></th>
                                                             <th scope="col" width="10%" style="padding: 0;"></th>
-                                                            <th scope="col" width="35%" style="padding: 0;"></th>
+                                                            <th scope="col" width="35%" style="padding: 0;" colspan="2"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -67,7 +73,7 @@
                                                             <td><strong>VCPU</strong>: <span th:text="${vnf.flavor.vcpu}"></span> Core</td>
                                                             <td><strong>Disk</strong>: <span th:text="${vnf.flavor.disk}"></span> GB</td>
                                                             <td><strong>Memory</strong>: <span th:text="${vnf.flavor.memory}"></span> MB</td>
-                                                            <td>
+                                                            <td colspan="2">
                                                                 <canvas class="vmRunningChart" th:id="'vmRunningChart_' + ${obj.index} + '_' + ${vnfObj.index}" height="30"></canvas>
                                                             </td>
                                                         </tr>
@@ -89,6 +95,10 @@
 <script src="/js/index.js"></script>
 <script th:inline="javascript">
 $(function() {
+    $(".deleteNS").click(function(e) {
+        e.stopPropagation();
+    });
+
     var NSs = [[${NSs}]];
     console.log(NSs);
     $(NSs).each(function(nsIndex, ns) {

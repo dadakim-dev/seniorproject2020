@@ -78,4 +78,34 @@ public class NSController {
 
         return nsArray;
     }
+
+    public Boolean deleteNS(String id, String status){
+        try{
+            String url = "http://54.180.94.196:8888/osm/nslcm/v1/ns_instances/";
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            headers.setBearerAuth(token);
+
+            JSONParser parser = new JSONParser();
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            RestTemplate restTemplate = new RestTemplate();
+
+            System.out.println(request.toString());
+
+            if(status.equals("READY")){
+                ResponseEntity<String> response = restTemplate.exchange(url+id+"/terminate", HttpMethod.POST, request, String.class);
+            }
+            else {
+                ResponseEntity<String> response = restTemplate.exchange(url+id, HttpMethod.DELETE, request, String.class);
+            }
+            return Boolean.TRUE;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return Boolean.FALSE;
+        }
+    }
+
 }
