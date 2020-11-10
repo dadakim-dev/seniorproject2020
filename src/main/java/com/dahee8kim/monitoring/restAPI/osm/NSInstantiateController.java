@@ -23,7 +23,7 @@ public class NSInstantiateController {
 
     public Boolean instantiateNS(String name, String vim, String nsd){
         try{
-            String url = "http://54.180.94.196:8888/osm/nslcm/v1/ns_instances_content";
+            String url = "http://13.125.62.208:8888/osm/nslcm/v1/ns_instances_content";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

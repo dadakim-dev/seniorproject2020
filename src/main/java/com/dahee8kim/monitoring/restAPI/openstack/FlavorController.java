@@ -19,7 +19,7 @@ public class FlavorController {
         Flavor flavor = new Flavor();
         if(flavorId == null) return flavor;
 
-        String url = "http://54.180.94.196:8774/v2.1/flavors/" + flavorId;
+        String url = "http://13.125.62.208:8774/v2.1/flavors/" + flavorId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

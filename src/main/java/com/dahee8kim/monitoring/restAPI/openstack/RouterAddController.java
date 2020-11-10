@@ -12,7 +12,7 @@ import java.util.Objects;
 @RestController
 public class RouterAddController {
     private String token;
-    private String url = "http://54.180.94.196:9696/v2.0/";
+    private String url = "http://13.125.62.208:9696/v2.0/";
 
     public String getToken() { return token; }
     public void setToken(String token) { this.token = token; }

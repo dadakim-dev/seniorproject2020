@@ -27,7 +27,7 @@ public class NSDescriptorController {
     private String token;
 
     public ArrayList<NSDescriptor> getNSDs(){
-        String url = "http://54.180.94.196:8888/osm//nsd/v1/ns_descriptors";
+        String url = "http://13.125.62.208:8888/osm//nsd/v1/ns_descriptors";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

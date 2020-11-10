@@ -45,7 +45,7 @@ public class VNFController {
     public ArrayList<VNF> getVNFs() {
         ArrayList<VNF> VNFs = new ArrayList<>();
 
-        String url = "http://54.180.94.196:8888/osm/nslcm/v1/vnf_instances";
+        String url = "http://13.125.62.208:8888/osm/nslcm/v1/vnf_instances";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -69,7 +69,7 @@ public class VNFController {
     }
 
     public VNF getVNF(String osmId) {
-        String url = "http://54.180.94.196:8888/osm/nslcm/v1/vnf_instances/" + osmId;
+        String url = "http://13.125.62.208:8888/osm/nslcm/v1/vnf_instances/" + osmId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

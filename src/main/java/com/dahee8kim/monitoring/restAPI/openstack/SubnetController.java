@@ -40,7 +40,7 @@ public class SubnetController {
     public ArrayList<Subnet> getSubnets() {
         ArrayList<Subnet> subnets = new ArrayList<>();
 
-        String url = "http://54.180.94.196:9696/v2.0/subnets";
+        String url = "http://13.125.62.208:9696/v2.0/subnets";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

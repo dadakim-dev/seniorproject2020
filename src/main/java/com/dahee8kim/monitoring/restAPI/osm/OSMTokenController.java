@@ -15,14 +15,14 @@ import java.util.Collections;
 public class OSMTokenController {
     public String getToken() {
         try {
-            String url = "http://54.180.94.196:8888/osm/admin/v1/tokens";
+            String url = "http://13.125.62.208:8888/osm/admin/v1/tokens";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
             JSONParser parser = new JSONParser();
-            JSONObject rawData = (JSONObject) parser.parse("{\"username\": \"admin\", \"password\": \"admin\", \"project_id\" : \"2c91256eb7be4f96b0115237cb746f3a\"}");
+            JSONObject rawData = (JSONObject) parser.parse("{\"username\": \"admin\", \"password\": \"admin\", \"project_id\" : \"98544205dcdd42da9139e274c20ea519\"}");
 
             HttpEntity<String> request = new HttpEntity<>(rawData.toString(), headers);
             RestTemplate restTemplate = new RestTemplate();

@@ -24,7 +24,7 @@ public class VIMController {
     private String token;
 
     public ArrayList<VIM> getVIMs(){
-        String url = "http://54.180.94.196:8888/osm/admin/v1/vim_accounts/";
+        String url = "http://13.125.62.208:8888/osm/admin/v1/vim_accounts/";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

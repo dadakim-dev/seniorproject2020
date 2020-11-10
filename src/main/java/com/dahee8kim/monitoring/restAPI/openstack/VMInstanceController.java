@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 public class VMInstanceController {
     private String token;
-    private String url = "http://54.180.94.196:8774/v2.1/servers";
+    private String url = "http://13.125.62.208:8774/v2.1/servers";
     private ArrayList<Instance> instance = new ArrayList<>();
     private VMStatusController vmStatusController = new VMStatusController();
     private JSONParser jsonParser = new JSONParser();

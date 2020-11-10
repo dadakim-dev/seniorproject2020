@@ -46,7 +46,7 @@ public class RouterController {
     }
 
     public ArrayList<Router> getRouters() {
-        String url = "http://54.180.94.196:9696/v2.0/routers";
+        String url = "http://13.125.62.208:9696/v2.0/routers";
         ArrayList<Router> routers = new ArrayList<>();
 
         HttpHeaders headers = new HttpHeaders();
