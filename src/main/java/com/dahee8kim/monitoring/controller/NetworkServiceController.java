@@ -70,7 +70,7 @@ public class NetworkServiceController {
                                     .collect(Collectors.toList())
                     );
                 } catch (NullPointerException e) {
-                    ns.setVNFs(VNFs);
+                    ns.setVNFs(new ArrayList<>());
                 }
             }
         }

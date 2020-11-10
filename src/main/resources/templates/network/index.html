@@ -9,56 +9,91 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="/js/springy/springy.js"></script>
+    <script src="/js/springy/springyui.js"></script>
 </head>
 <style>
 tbody, td, th {border: none !important;}
-.networks > thead th {border-bottom: 2px solid #eee !important;}
-.networks > tbody > tr:first-child td { border-bottom: 1px solid #eee !important;}
-.subnets > tbody > tr > td { border-bottom: 1px solid #eee !important; background: #f5f5f5 !important;}
+table:not(.table-light) > thead th {border-bottom: 2px solid #eee !important;}
+table:not(.table-light) > tbody > tr:first-child td { border-bottom: 1px solid #eee !important;}
+.table-light > tbody > tr > td { border-bottom: 1px solid #eee !important; background: #f5f5f5 !important;}
 td, th { font-size: 0.97em !important;}
+.card-title > * {vertical-align: middle;}
+.card-title > h3 {display: inline-block;}
+.card-title > .btn {margin-left: 10px;}
 </style>
 <body>
 <div id="wrap">
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">New Router</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/router" method="post" id="newRouterForm">
+                        <div class="form-group">
+                            <label for="routerName">Router Name</label>
+                            <input type="text" class="form-control" id="routerName" name="routerName" placeholder="Router Name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="newRouterSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <th:block th:replace="fragment/left"></th:block>
     <section id="right">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">Networks</h3>
+                        <div class="card-title">
+                            <h3>Network</h3>
+                        </div>
                         <div class="card-text">
                             <table class="table networks">
                                 <thead>
                                     <tr>
-                                        <th width="20%">ID</th>
-                                        <th width="20%">Name</th>
-                                        <th>Status</th>
+                                        <th width="25%">ID</th>
+                                        <th width="25%">Name</th>
+                                        <th width="10%">Status</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody th:each="network, obj: ${networks}">
                                     <tr data-toggle="collapse" th:data-target="'#accordian' + ${obj.index}">
                                         <td th:text="${network.id}"></td>
                                         <td th:text="${network.name}"></td>
-                                        <td>
+                                        <td colspan="2">
                                             <div th:text="${network.status}" class="btn btn-sm status"></div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" style="padding: 0;">
+                                        <td colspan="4" style="padding: 0;">
                                             <div class="collapse" th:id="'accordian' + ${obj.index}">
                                                 <table class="table table-light subnets" style="margin:0;">
                                                     <thead>
                                                     <tr>
-                                                        <th width="20%" style="padding:0;"></th>
-                                                        <th width="20%" style="padding:0;"></th>
+                                                        <th width="25%" style="padding:0;"></th>
+                                                        <th width="25%" style="padding:0;"></th>
                                                         <th style="padding:0;"></th>
+                                                        <th style="padding: 0;"></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr th:each="subnet, subnetObj: ${network.subnets}">
                                                         <td th:text="${subnet.id}"></td>
                                                         <td th:text="${subnet.name}"></td>
-                                                        <td>
+                                                        <td colspan="2">
                                                             <span th:text="${subnet.gatewayIP}"></span>
                                                             <span th:text="'('+${subnet.cidr}+')'"></span>
                                                         </td>
@@ -80,13 +115,50 @@ td, th { font-size: 0.97em !important;}
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3>Router</h3>
+                            <div class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#staticBackdrop">New Router</div>
+                        </div>
+                        <div class="card-text">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th width="25%">ID</th>
+                                    <th width="25%">Name</th>
+                                    <th width="10%">Status</th>
+                                    <th>External Fixed IP</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="router, obj: ${routers}">
+                                    <td th:text="${router.id}"></td>
+                                    <td th:text="${router.name}"></td>
+                                    <td>
+                                        <div class="btn btn-sm status" th:text="${router.status}"></div>
+                                    </td>
+                                    <td>
+                                        <span th:each="externalFixedIp, ipObj: ${router.externalFixedIps}" th:text="${externalFixedIp}"></span>
+                                        <span th:if="${router.externalFixedIps.size() == 0}">NULL</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row topology">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Network Topology</h3>
                         <div class="card-text">
-                            <canvas id="networkTopology" width="1595" height="500" style="border: 1px solid black;"></canvas>
+                            <canvas id="networkTopology" width="1500" height="500"></canvas>
                         </div>
                     </div>
                 </div>
@@ -96,9 +168,52 @@ td, th { font-size: 0.97em !important;}
 </div>
 <script src="/js/index.js"></script>
 <script th:inline="javascript">
-$(function() {
-    console.log([[${networks}]]);
-});
+    $(function() {
+        $("#newRouterForm").submit(function(e) {
+            if($("#routerName").val().trim() == "") {
+                alert("Required router name");
+                return false;
+            }
+        });
+
+        $("#newRouterSubmit").click(function() {
+            $("#newRouterForm").submit();
+        });
+
+        var routers = [[${routers}]];
+        var networks = [[${networks}]];
+        console.log(networks);
+
+        var graphData = {
+            nodes: ["ROOT"],
+            edges: []
+        };
+
+        $(networks).each(function(n, network) {
+            var networkName = network.name + "(network)";
+            graphData.nodes.push(networkName);
+            graphData.edges.push(["ROOT", networkName]);
+
+            $(network.nss).each(function(n, ns) {
+                var nsName = ns.name + "(NS)";
+                graphData.nodes.push(nsName);
+                graphData.edges.push([networkName, nsName]);
+
+                $(ns.vnfs).each(function(v, vnf) {
+                    var vnfName = vnf.name + "(VNF)";
+                    graphData.nodes.push(vnfName);
+                    graphData.edges.push([nsName, vnfName]);
+                });
+            });
+        });
+
+        var graph = new Springy.Graph();
+        graph.loadJSON(graphData);
+
+        $("#networkTopology").springy({
+            graph: graph
+        });
+    });
 </script>
 </body>
 </html>

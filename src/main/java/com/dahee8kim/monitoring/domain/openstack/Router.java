@@ -1,10 +1,13 @@
 package com.dahee8kim.monitoring.domain.openstack;
 
+import java.util.ArrayList;
+
 public class Router {
     private String id;
     private String name;
     private String tenantId;
     private String status;
+    private ArrayList<String> externalFixedIps;
 
     public String getId() {
         return id;
@@ -36,5 +39,13 @@ public class Router {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ArrayList<String> getExternalFixedIps() {
+        return externalFixedIps;
+    }
+
+    public void setExternalFixedIps(ArrayList<String> externalFixedIps) {
+        this.externalFixedIps = externalFixedIps;
     }
 }

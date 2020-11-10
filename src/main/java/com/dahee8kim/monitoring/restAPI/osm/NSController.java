@@ -35,6 +35,7 @@ public class NSController {
             ns.setOperationalStatus(jsonData.get("operational-status").toString());
             ns.setConfigStatus(jsonData.get("config-status").toString());
             ns.setDetailedStatus(jsonData.get("detailed-status").toString());
+            ns.setVnfIds(new ArrayList<String>());
 
             // get vim net id
             JSONObject deploy = (JSONObject) jsonData.get("deploymentStatus");
@@ -45,7 +46,11 @@ public class NSController {
             JSONArray vnfrRefs = (JSONArray) parser.parse(jsonData.get("constituent-vnfr-ref").toString());
             JSONArray vnfs = (JSONArray) parser.parse(deploy.get("vnfs").toString());
             vnfrRefs.forEach(vnfrRef -> ns.addVnfIds(vnfrRef.toString()));
-        } catch (Exception e) {}
+        } catch (NullPointerException e) {
+            ns.setVimNetId(".");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return ns;
     }

@@ -100,6 +100,7 @@ $(function() {
     });
 
     var NSs = [[${NSs}]];
+    console.log(NSs);
     $(NSs).each(function(nsIndex, ns) {
         $(ns.vnfs).each(function(vnfIndex, vnf) {
             var ctx = document.getElementById("vmRunningChart_" + nsIndex + "_" + vnfIndex).getContext("2d");

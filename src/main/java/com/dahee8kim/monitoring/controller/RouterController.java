@@ -4,13 +4,14 @@ import com.dahee8kim.monitoring.restAPI.openstack.OpenStackTokenController;
 import com.dahee8kim.monitoring.restAPI.openstack.RouterAddController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class RouterController {
-    @GetMapping("/router")
-    public String RouterAdd(@RequestParam("router-name") String name){
+    @PostMapping("/router")
+    public String RouterAdd(@RequestParam("routerName") String name){
         // OpenStack Network Topology
         OpenStackTokenController openStackTokenController = new OpenStackTokenController();
         String openStackToken = openStackTokenController.getToken();
@@ -19,7 +20,8 @@ public class RouterController {
         routerAddController.setToken(openStackToken);
         Boolean result = routerAddController.createRouter(name);
 
-        return "redirect:/";}
+        return "redirect:/network";
+    }
 
     @GetMapping("/interface")
     public String InterfaceAdd(@RequestParam("router-id") String routerId, @RequestParam("subnet-id") String subnetId){
