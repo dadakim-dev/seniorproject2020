@@ -84,4 +84,28 @@ public class NetworkServiceController {
     public String NetworkServiceDetail(@RequestParam("id") String id, Model model) {
         return "ns/detail";
     }
+
+    // delete ns instance
+    @GetMapping("/deleting")
+    public String DeleteNS(@RequestParam("ns-id") String id){
+
+        // get osm token
+        OSMTokenController osmTokenController = new OSMTokenController();
+        String osmToken = osmTokenController.getToken();
+
+        // set osm token to delete ns
+        NSController nsController = new NSController();
+        nsController.setToken(osmToken);
+
+        ArrayList<NS> NSs = nsController.getNSs();
+        for(NS ns : NSs){
+            if(ns.getId().equals(id)){
+                System.out.println(ns.getNsState());
+                nsController.deleteNS(id, ns.getNsState());
+            }
+        }
+
+        return "redirect:/ns";
+    }
+
 }
